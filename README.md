@@ -32,7 +32,7 @@ using Xe.AcrylicView;
 
 iOS、Mac平台不支持颜色混合
 
-Android平台的实现方式是从这个仓库获取的，请支持原作者：
+Android平台的实现方式是从这个仓库获取，从Xamarin.Forms简单移植过来的，请支持原作者：
 https://github.com/roubachof/Sharpnado.MaterialFrame
 
 
