@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
+             x:Class="AcrylicView.Samples.MainPage" NavigationPage.HasNavigationBar="False">
+
+    <Grid IgnoreSafeArea="True">
+        <Image Source="nature.jpg" Aspect="AspectFill"/>
+
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="10,30" >
+
+
+                <Grid>
+                    <ui:AcrylicView  HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="默认样式 ，En：AcrylicView,Default Style" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+
+
+
+                <Grid>
+                    <ui:AcrylicView  EffectStyle="Dark"   HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="深色 样式  ，En：AcrylicView, DarkStyle" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+
+
+                <Grid>
+                    <ui:AcrylicView  EffectStyle="ExtraDark"   HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="超级深色 样式  ，En：AcrylicView, ExtraDarkStyle" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+
+                
+                <Grid>
+                    <ui:AcrylicView  EffectStyle="Light"   HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="浅色 样式  ，En：AcrylicView, LightStyle" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+                
+                
+                <Grid>
+                    <ui:AcrylicView  EffectStyle="ExtraLight"   HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="超级浅色 样式  ，En：AcrylicView, ExtraLightStyle" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+
+
+                <Border Padding="0"  Stroke="skyblue"  StrokeThickness="3" BackgroundColor="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Grid>
+                        <ui:AcrylicView  EffectStyle="ExtraLight"   HeightRequest="100"  />
+                        
+                        <Label 
+                           Text="通过Border增加边线 ，En：AcrylicView, ExtraLightStyle" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                            />
+                    </Grid>
+                </Border>
+
+
+                <Grid>
+                    <ui:AcrylicView  TintColor="BlueViolet" TintOpacity=".3"  HeightRequest="100"  CornerRadius="10"/>
+                    <Label 
+                           Text="默认样式+颜色混合 ，En：AcrylicView,Default Style+Color blending" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+
+
+                <Grid ColumnDefinitions="*,*,*,*">
+                    <ui:AcrylicView  TintColor="Red" TintOpacity="0"  HeightRequest="100"  CornerRadius="50"/>
+                    <ui:AcrylicView  TintColor="HotPink" TintOpacity=".3"  HeightRequest="100" WidthRequest="100"  CornerRadius="50" Grid.Column="1"/>
+                    <ui:AcrylicView  TintColor="Cyan" TintOpacity="0.6"  HeightRequest="100"    Grid.Column="2" CornerRadius="5"/>
+                    <ui:AcrylicView  TintColor="OrangeRed" TintOpacity="0.2"  HeightRequest="100"  WidthRequest="100" CornerRadius="10" Grid.Column="3"/>
+                </Grid>
+
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+
+</ContentPage>
