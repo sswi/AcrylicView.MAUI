@@ -32,16 +32,27 @@ namespace Xe.AcrylicView.Controls
 
 
         }
+        static void MapBorderColor(AcrylicViewHandler handler, IAcrylicView view)
+        {
 
+        }
+        static void MapBorderThickness(AcrylicViewHandler handler, IAcrylicView view)
+        {
 
+        }
 
         static void MapCornerRadius(AcrylicViewHandler handler, IAcrylicView view)
         {
             var nativView = handler?.PlatformView;
-            nativView.Layer.CornerRadius = view.CornerRadius;
+          //--  nativView.Layer.CornerRadius = view.CornerRadius;
         }
 
 
+        static void MapContent(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            var nativView = handler?.PlatformView;
+
+        }
         private static void MapEffectStyle(AcrylicViewHandler handler, IAcrylicView view)
         {
             var nativView = handler?.PlatformView;

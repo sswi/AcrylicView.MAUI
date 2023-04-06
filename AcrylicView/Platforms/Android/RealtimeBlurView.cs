@@ -4,9 +4,9 @@ using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Color = Android.Graphics.Color;
 using Math = System.Math;
 using Paint = Android.Graphics.Paint;
+using Path = Android.Graphics.Path;
 using Rect = Android.Graphics.Rect;
 using RectF = Android.Graphics.RectF;
 using View = Android.Views.View;
@@ -15,9 +15,9 @@ namespace Xe.AcrylicView.Platforms.Android
 {
     public class RealtimeBlurView : View
     {
-        //   private static readonly  int RealtimeBlurViewInstanceCount;
+        private Path mPath = new Path();
 
-        //   private readonly int _subscriptionCount;
+        private float[] mRadii = new float[8];
 
         private float mDownsampleFactor; // default 4
 
@@ -25,7 +25,7 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private float mBlurRadius; // default 10dp (0 < r <= 25)
 
-        private float mCornerRadius; // default 0
+        //  private float mCornerRadius; // default 0
 
         private readonly IBlurImpl mBlurImpl;
 
@@ -63,8 +63,6 @@ namespace Xe.AcrylicView.Platforms.Android
         [Obsolete("此类库 在>=Android12 已经不再使用，谷歌已经更新了一套新的模糊操作类库")]
         public RealtimeBlurView(Context context, string formsId = null) : base(context)
         {
-
-
             // provide your own by override getBlurImpl()
             mBlurImpl = GetBlurImpl();
 
@@ -81,14 +79,6 @@ namespace Xe.AcrylicView.Platforms.Android
         {
         }
 
-        //protected override void JavaFinalize()
-        //{
-        //    base.JavaFinalize();
-
-        //    RealtimeBlurViewInstanceCount--;
-        //    InternalLogger.Debug("RealtimeBlurView", $"JavaFinalize() => Active instances: {RealtimeBlurViewInstanceCount}");
-        //}
-        [Obsolete("内有方法过时")]
         protected IBlurImpl GetBlurImpl()
         {
             try
@@ -117,16 +107,6 @@ namespace Xe.AcrylicView.Platforms.Android
             };
         }
 
-        public void SetCornerRadius(float radius)
-        {
-            if (mCornerRadius != radius)
-            {
-                mCornerRadius = radius;
-                mDirty = true;
-                Invalidate();
-            }
-        }
-
         public void SetDownsampleFactor(float factor)
         {
             if (factor <= 0)
@@ -143,10 +123,9 @@ namespace Xe.AcrylicView.Platforms.Android
             }
         }
 
-
         private void SubscribeToPreDraw(View decorView)
         {
-            //判断上层视图是否为空 或 视图树为空            
+            //判断上层视图是否为空 或 视图树为空
             if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed())
             {
                 return;
@@ -434,6 +413,11 @@ namespace Xe.AcrylicView.Platforms.Android
             mBlurImpl.Blur(bitmapToBlur, blurredBitmap);
         }
 
+        public void OnPreDraw()
+        {
+            preDrawListener.OnPreDraw();
+        }
+
         private readonly PreDrawListener preDrawListener;
 
         private class PreDrawListener : Java.Lang.Object, ViewTreeObserver.IOnPreDrawListener
@@ -474,8 +458,8 @@ namespace Xe.AcrylicView.Platforms.Android
                     int y = -locations[1];
 
                     blurView.GetLocationOnScreen(locations);
-                    x += locations[0];
-                    y += locations[1];
+                    x += locations[0] > 5 ? locations[0] - 5 : locations[0];  //-5  为了不受BorderColor的影响
+                    y += locations[1] > 5 ? locations[1] - 5 : locations[1];
 
                     // just erase transparent
                     blurView.mBitmapToBlur.EraseColor(blurView.mOverlayColor & 0xffffff);
@@ -572,31 +556,6 @@ namespace Xe.AcrylicView.Platforms.Android
         {
             base.OnDraw(canvas);
             DrawRoundedBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor);
-
-            // DrawBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor);
-        }
-
-        /**
-         * Custom draw the blurred bitmap and color to define your own shape
-         *
-         * @param canvas
-         * @param blurredBitmap
-         * @param overlayColor
-         */
-        //绘制高斯模糊位图
-        protected void DrawBlurredBitmap(Canvas canvas, Bitmap blurredBitmap, int overlayColor)
-        {
-            if (blurredBitmap != null)
-            {
-                mRectSrc.Right = blurredBitmap.Width;
-                mRectSrc.Bottom = blurredBitmap.Height;
-                mRectDst.Right = Width;
-                mRectDst.Bottom = Height;
-                canvas.DrawBitmap(blurredBitmap, mRectSrc, mRectDst, null);
-            }
-
-            mPaint.Color = new Color(overlayColor);
-            canvas.DrawRect(mRectDst, mPaint);
         }
 
         //绘制圆角模糊视图
@@ -613,13 +572,32 @@ namespace Xe.AcrylicView.Platforms.Android
                 matrix.PostScale(mRectF.Width() / blurredBitmap.Width, mRectF.Height() / blurredBitmap.Height);
                 shader.SetLocalMatrix(matrix);
                 mPaint.SetShader(shader);
-                canvas.DrawRoundRect(mRectF, mCornerRadius, mCornerRadius, mPaint);
 
-                mPaint.Reset();
-                mPaint.AntiAlias = true;
-                mPaint.Color = new Color(overlayColor);
-                canvas.DrawRoundRect(mRectF, mCornerRadius, mCornerRadius, mPaint);
+                var path2 = new Path();
+                path2.AddRoundRect(mRectF, mRadii, Path.Direction.Cw);
+                canvas.DrawPath(path2, mPaint);
             }
+        }
+
+        public void SetCornerRadius(float topLeft, float topRight, float bottomRight, float bottomLeft)
+        {
+            var radius = new float[8] { topLeft, topLeft, topRight, topRight, bottomRight, bottomRight, bottomLeft, bottomLeft };
+            if (mRadii == radius)
+                return;
+
+            mDirty = true;
+            mRadii[0] = topLeft;
+            mRadii[1] = topLeft;
+
+            mRadii[2] = topRight;
+            mRadii[3] = topRight;
+
+            mRadii[4] = bottomRight;
+            mRadii[5] = bottomRight;
+
+            mRadii[6] = bottomLeft;
+            mRadii[7] = bottomLeft;
+            Invalidate();
         }
     }
 }

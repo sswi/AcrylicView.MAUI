@@ -1,144 +1,179 @@
-﻿using Android.Graphics.Drawables;
-using Android.Widget;
+﻿using Android.Widget;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using Xe.AcrylicView.Platforms.Android;
+using Xe.AcrylicView.Platforms.Android.Drawable;
+using BorderDrawable = Xe.AcrylicView.Platforms.Android.Drawable.BorderDrawable;
+using Color = Microsoft.Maui.Graphics.Color;
+using View = Android.Views.View;
 
 namespace Xe.AcrylicView.Controls
 {
-    public partial class AcrylicViewHandler : ViewHandler<IAcrylicView, RelativeLayout>
+    public partial class AcrylicViewHandler : ViewHandler<IAcrylicView, FrameLayout>
     {
-
+        /// <summary>
+        /// acrylicBackground layer
+        /// </summary>
         private RealtimeBlurView realtimeBlurView;
-        private Android.Views.View colorblendLayer;
-        private int colorblendLayerAlpha = 64;
 
+        private BorderDrawable colorGradientDrawable;
 
+        //颜色层
+        private View colorBlendLayer;
 
-        protected override RelativeLayout CreatePlatformView()
+        private float colorBlendLayerAlpha = 0f;
+
+        private BorderViewGroup borderViewGroup;
+
+        protected override FrameLayout CreatePlatformView()
         {
-
-            colorblendLayer = new Android.Views.View(Context);
+            colorBlendLayer = new View(Context);
 
             realtimeBlurView = new RealtimeBlurView(Context);
-            realtimeBlurView.SetBlurRadius(160);
+            realtimeBlurView.SetBlurRadius(100);
             realtimeBlurView.SetOverlayColor(Colors.Transparent.ToAndroid());
-            realtimeBlurView.SetDownsampleFactor(1);
-            var acrylicView = new RelativeLayout(Context);
+            realtimeBlurView.SetDownsampleFactor(2);
 
-            // realtimeBlurView.SetRenderEffect(RenderEffect.CreateBlurEffect(3, 3, Shader.TileMode.Repeat));
-            acrylicView.AddView(realtimeBlurView);
-            acrylicView.AddView(colorblendLayer);
-            return acrylicView;
+            borderViewGroup = new BorderViewGroup(Context)
+            {
+                CrossPlatformMeasure = new Func<double, double, Size>(VirtualView.CrossPlatformMeasure),
+                CrossPlatformArrange = new Func<Rect, Size>(VirtualView.CrossPlatformArrange)
+            };
 
+            var frame = new FrameLayout(Context);
+
+            frame.AddView(realtimeBlurView);
+            frame.AddView(colorBlendLayer);
+            frame.AddView(borderViewGroup);
+
+            return frame;
         }
-
-
-
-
-
-
 
         private static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
         {
+            if (view.EffectStyle != EffectStyle.Custom)
+                return;
+            var nativView = handler?.PlatformView;
+            if (nativView == null) return;
+
             handler.UpdateColorblendLayer(view);
         }
 
-
-        //单独 设置颜色层的不透明度
         private static void MapTintOpacity(AcrylicViewHandler handler, IAcrylicView view)
         {
-            //如果颜色为空 或者 为透明时，就不改变
-            if (view.TintColor == null || view.TintColor == Colors.Transparent)
+            if (view.EffectStyle != EffectStyle.Custom)
                 return;
 
-            handler.colorblendLayerAlpha = (int)((view.TintOpacity >= 0 && view.TintOpacity <= 1) ? (view.TintOpacity * 255) : 64);
-            handler.colorblendLayer.Background.SetAlpha(handler.colorblendLayerAlpha);
+            if (view.TintColor == null || view.TintColor == Colors.Transparent)
+            {
+                return;
+            }
+            handler.colorBlendLayerAlpha = (float)view.TintOpacity;
+            handler.colorBlendLayer.Alpha = handler.colorBlendLayerAlpha;
         }
-
-
 
         private static void MapEffectStyle(AcrylicViewHandler handler, IAcrylicView view)
         {
-
             switch (view.EffectStyle)
             {
                 case EffectStyle.Dark:
-
-                    handler.UpdateEffectStyle(view, Colors.Black, 0.15);
-
+                    handler.UpdateEffectStyle(view, Colors.Black, 0.15f);
                     break;
+
                 case EffectStyle.ExtraDark:
-                    handler.UpdateEffectStyle(view, Colors.Black, 0.3);
+                    handler.UpdateEffectStyle(view, Colors.Black, 0.3f);
                     break;
+
                 case EffectStyle.Light:
-                    handler.UpdateEffectStyle(view, Colors.White, 0.1);
+                    handler.UpdateEffectStyle(view, Colors.White, 0.1f);
                     break;
+
                 case EffectStyle.ExtraLight:
-                    handler.UpdateEffectStyle(view, Colors.White, 0.3);
+                    handler.UpdateEffectStyle(view, Colors.White, 0.3f);
+                    break;
+
+                case EffectStyle.Custom:
+                    handler.UpdateColorblendLayer(view);
                     break;
             }
         }
 
-
-        private void UpdateEffectStyle(IAcrylicView view, Microsoft.Maui.Graphics.Color color, double tintOpacity)
+        private void UpdateEffectStyle(IAcrylicView view, Color color, float tintOpacity)
         {
-            //颜色层
-            var d = new GradientDrawable();
-            d.SetTint(color.ToAndroid());
+            colorGradientDrawable = new BorderDrawable(Context, view.CornerRadius, color.ToPlatform());
+            colorBlendLayer.SetBackgroundDrawable(colorGradientDrawable);
 
-            //圆角
-            d.SetCornerRadius(view.CornerRadius);
-            //颜色层与模糊层叠加
-            colorblendLayer.SetBackgroundDrawable(d);
-
-            //设置颜色层不透明度
-            colorblendLayer.Background.SetAlpha(colorblendLayerAlpha);
-
-
-            colorblendLayerAlpha = (int)((tintOpacity >= 0 && tintOpacity <= 1) ? (tintOpacity * 255) : 64);
-            colorblendLayer.Background.SetAlpha(colorblendLayerAlpha);
+            colorBlendLayerAlpha = tintOpacity;
+            colorBlendLayer.Alpha = colorBlendLayerAlpha;
         }
 
+        private static void MapContent(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            var nativView = handler?.PlatformView;
+            if (nativView == null) return;
 
+            handler.borderViewGroup.RemoveAllViews();
 
+            if (view.Content is IView content && view.Handler != null)
+            {
+                var view3 = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
+                handler.borderViewGroup.AddView(view3);
+            }
+        }
 
+        private static void MapBorderThickness(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            var nativView = handler?.PlatformView;
+            if (nativView == null) return;
+
+            PropertyChanged(handler, view);
+        }
 
         private static void MapCornerRadius(AcrylicViewHandler handler, IAcrylicView view)
         {
+            var nativView = handler?.PlatformView;
+            if (nativView == null) return;
 
-            //绘制模糊层
-            handler.realtimeBlurView.SetCornerRadius(view.CornerRadius);
-
-            //更新颜色混合层
             handler.UpdateColorblendLayer(view);
+
+            var thickness = nativView.Context.ToPixels(view.CornerRadius);
+            //亚克力层圆角
+            handler.realtimeBlurView.SetCornerRadius((float)thickness.Left, (float)thickness.Top, (float)thickness.Right, (float)thickness.Bottom);
+
+            //边框层
+            PropertyChanged(handler, view);
         }
 
+        private static void MapBorderColor(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            PropertyChanged(handler, view);
+        }
 
-        /// <summary>
-        /// 更新颜色混合层
-        /// </summary>
-        /// <param name="view"></param>
+        private static void PropertyChanged(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            var nativView = handler?.PlatformView;
+            if (nativView == null) return;
+            handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view);
+        }
+
         private void UpdateColorblendLayer(IAcrylicView view)
         {
-            if (view.TintColor == null || view.TintColor == Colors.Transparent)
+            if ((view.TintColor == null || view.TintColor == Colors.Transparent) && view.EffectStyle == EffectStyle.Custom)
             {
-                colorblendLayer.SetBackgroundDrawable(null);
+                colorBlendLayer.SetBackgroundDrawable(null);
                 return;
             }
+            else
+            {
+                //混合色层圆角
+                colorGradientDrawable = new BorderDrawable(Context, view.CornerRadius, view.TintColor.ToPlatform());
+                colorBlendLayer.SetBackgroundDrawable(colorGradientDrawable);
 
-            //颜色层
-            var d = new GradientDrawable();
-            d.SetTint(view.TintColor.ToAndroid());
-
-            //圆角
-            d.SetCornerRadius(view.CornerRadius);
-            //颜色层与模糊层叠加
-            colorblendLayer.SetBackgroundDrawable(d);
-
-            //设置颜色层不透明度
-            colorblendLayer.Background.SetAlpha(colorblendLayerAlpha);
-
+                //设置颜色层不透明度
+                colorBlendLayerAlpha = (float)view.TintOpacity;
+                colorBlendLayer.Alpha = colorBlendLayerAlpha;
+            }
         }
     }
 }

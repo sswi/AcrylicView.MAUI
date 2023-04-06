@@ -9,9 +9,15 @@ namespace Xe.AcrylicView.Controls
             [nameof(IAcrylicView.CornerRadius)] = MapCornerRadius,
             [nameof(IAcrylicView.TintColor)] = MapTintColor,
             [nameof(IAcrylicView.TintOpacity)] = MapTintOpacity,
-            [nameof(IAcrylicView.EffectStyle)] = MapEffectStyle
-
+            [nameof(IAcrylicView.EffectStyle)] = MapEffectStyle,
+            [nameof(IAcrylicView.Content)] = MapContent,
+            [nameof(IAcrylicView.BorderThickness)] = MapBorderThickness,
+            [nameof(IAcrylicView.BorderColor)] = MapBorderColor
         };
+
+
+
+
 
         public AcrylicViewHandler() : base(AcrylicViewMapper)
         {

@@ -2,7 +2,7 @@
 
 namespace Xe.AcrylicView
 {
-    public partial class AcrylicView : View, IAcrylicView
+    public partial class AcrylicView : ContentView, IAcrylicView
     {
         public static readonly BindableProperty TintColorProperty = BindableProperty.Create(
             nameof(TintColor),
@@ -17,12 +17,12 @@ namespace Xe.AcrylicView
 
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(
         nameof(CornerRadius),
-        typeof(float),
-        typeof(AcrylicView), 0.0f);
+        typeof(Thickness),
+        typeof(AcrylicView),new Thickness(5.0));
 
-        public float CornerRadius
+        public Thickness CornerRadius
         {
-            get => (float)GetValue(CornerRadiusProperty);
+            get => (Thickness)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
 
@@ -42,13 +42,35 @@ namespace Xe.AcrylicView
         public static readonly BindableProperty EffectStyleProperty = BindableProperty.Create(
             nameof(EffectStyle),
             typeof(EffectStyle),
-            typeof(AcrylicView), EffectStyle.Light);
+            typeof(AcrylicView), EffectStyle.Custom);
 
         public EffectStyle EffectStyle
         {
             get => (EffectStyle)GetValue(EffectStyleProperty);
             set => SetValue(EffectStyleProperty, value);
         }
+
+
+
+        public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(nameof(BorderThickness), typeof(Thickness), typeof(AcrylicView), new Thickness(1.0));
+
+        public Thickness BorderThickness
+        {
+            get => (Thickness)GetValue(BorderThicknessProperty);
+            set => SetValue(BorderThicknessProperty, value);
+        }
+
+
+
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AcrylicView), Colors.Transparent);
+
+        public Color BorderColor
+        {
+            get => (Color)GetValue(BorderColorProperty);
+            set => SetValue(BorderColorProperty, value);
+        }
+
+
 
 
     }

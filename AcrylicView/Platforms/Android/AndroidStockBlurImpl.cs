@@ -13,7 +13,7 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private ScriptIntrinsicBlur _mBlurScript;
 
-        private Allocation _mBlurInput;
+      private Allocation _mBlurInput;
 
         private Allocation _mBlurOutput;
 
@@ -72,7 +72,7 @@ namespace Xe.AcrylicView.Platforms.Android
                 _mRenderScript = null;
             }
         }
-        [Obsolete("内有方法过时")]
+
         public void Blur(Bitmap input, Bitmap output)
         {
             _mBlurInput.CopyFrom(input);
