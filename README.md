@@ -29,8 +29,27 @@ using Xe.AcrylicView;
 
 
 
+ xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
+ 
 
-iOS、Mac平台不支持颜色混合
+<ui:AcrylicView VerticalOptions="Center"  
+                HeightRequest="100"  
+                EffectStyle="Custom"    
+                Margin="10"  
+                TintColor="OrangeRed" 
+                TintOpacity=".15 "  
+                BorderColor="OrangeRed" 
+                BorderThickness="1,2" 
+                CornerRadius="50,10,30,20" >
+   <!--Content-->             
+   <Grid>
+    <Label Text="Hello Word" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>    
+   </Grid>
+</ui:AcrylicView>
+
+
+
+
 
 Android平台的实现方式是从这个仓库获取，从Xamarin.Forms简单移植过来的，请支持原作者：
 https://github.com/roubachof/Sharpnado.MaterialFrame
