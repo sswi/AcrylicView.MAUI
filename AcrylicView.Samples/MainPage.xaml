@@ -11,12 +11,14 @@
 
 
         <Grid VerticalOptions="Center"  >
-            <ui:AcrylicView VerticalOptions="Center"  WidthRequest="200" HeightRequest="200"  EffectStyle="Custom"    Margin="10"  TintColor="OrangeRed" TintOpacity=".05 "  BorderColor="OrangeRed" BorderThickness="2" CornerRadius="50,10,30,20" >
+            
+            <ui:AcrylicView VerticalOptions="Center"   HeightRequest="100"  EffectStyle="Custom"    Margin="10"  TintColor="OrangeRed" TintOpacity=".15 "  BorderColor="OrangeRed" BorderThickness="2" CornerRadius="50,10,30,20" >
                 <Grid>
-                    <Label Text="合法快速导航" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>
+                    <Label Text="Hello Word" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>
                     <Label/>
                 </Grid>
             </ui:AcrylicView>
+            
         </Grid>
 
 

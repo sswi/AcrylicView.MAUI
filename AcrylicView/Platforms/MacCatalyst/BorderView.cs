@@ -1,10 +1,10 @@
-﻿using CoreAnimation;
-using CoreGraphics;
-using Microsoft.Maui.Platform;
-using System.Runtime.InteropServices;
-using UIKit;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Xe.AcrylicView.Platforms.iOS
+namespace Xe.AcrylicView.Platforms.MacCatalyst
 {
     public class BorderView : UIView
     {
@@ -112,7 +112,7 @@ namespace Xe.AcrylicView.Platforms.iOS
             SetupBorderLayer();
         }
 
-    
+
 
 
         public override bool PointInside(CGPoint point, UIEvent uievent)
@@ -131,7 +131,7 @@ namespace Xe.AcrylicView.Platforms.iOS
 
         private void SetupBorderLayer()
         {
-            
+
             if (Frame.IsEmpty)
             {
                 return;
@@ -186,7 +186,8 @@ namespace Xe.AcrylicView.Platforms.iOS
             cGPath.AddArcToPoint(nFloat, nFloat1, nFloat + nFloat8, nFloat1, nFloat8);
             cGPath.CloseSubpath();
             layer.Mask = new CAShapeLayer
-            {               
+            {
+                Name = "ClipShapeLayer",
                 Path = cGPath
             };
             if (num9 > 0 || num6 > 0 || num7 > 0 || num8 > 0)
