@@ -31,7 +31,7 @@ using Xe.AcrylicView;
 
  xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
  
-
+```xml
 <ui:AcrylicView VerticalOptions="Center"  
                 HeightRequest="100"  
                 EffectStyle="Custom"    
@@ -45,7 +45,7 @@ using Xe.AcrylicView;
     <Label Text="Hello Word" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>    
    </Grid>
 </ui:AcrylicView>
-
+```
 
 
 
