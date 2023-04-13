@@ -31,7 +31,7 @@ using Xe.AcrylicView;
 
  xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
  
-
+```xml
 <ui:AcrylicView VerticalOptions="Center"  
                 HeightRequest="100"  
                 EffectStyle="Custom"    
@@ -40,13 +40,12 @@ using Xe.AcrylicView;
                 TintOpacity=".15 "  
                 BorderColor="OrangeRed" 
                 BorderThickness="1,2" 
-                CornerRadius="50,10,30,20" >
-   <!--Content-->             
+                CornerRadius="50,10,30,20" >           
    <Grid>
     <Label Text="Hello Word" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>    
    </Grid>
 </ui:AcrylicView>
-
+```
 
 
 
