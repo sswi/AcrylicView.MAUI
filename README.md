@@ -1,5 +1,10 @@
 
-
+| Supported platforms        |
+|----------------------------|
+| :heavy_check_mark: Android | 
+| :heavy_check_mark: iOS     |
+| :heavy_check_mark: macOS   |
+| :heavy_check_mark: Windows |
 
 
 ```csharp
