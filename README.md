@@ -2,7 +2,7 @@
 
 
 
-
+```csharp
 
 using Xe.AcrylicView;
 
@@ -26,12 +26,14 @@ using Xe.AcrylicView;
         }
     }
 }
+```
 
 
 
- xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
  
 ```xml
+ xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView" 
+
 <ui:AcrylicView VerticalOptions="Center"  
                 HeightRequest="100"  
                 EffectStyle="Custom"    
