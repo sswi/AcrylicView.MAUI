@@ -1,8 +1,13 @@
-﻿using System;
+﻿using CoreAnimation;
+using CoreGraphics;
+using Microsoft.Maui.Platform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using UIKit;
 
 namespace Xe.AcrylicView.Platforms.MacCatalyst
 {
@@ -186,8 +191,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
             cGPath.AddArcToPoint(nFloat, nFloat1, nFloat + nFloat8, nFloat1, nFloat8);
             cGPath.CloseSubpath();
             layer.Mask = new CAShapeLayer
-            {
-                Name = "ClipShapeLayer",
+            {             
                 Path = cGPath
             };
             if (num9 > 0 || num6 > 0 || num7 > 0 || num8 > 0)

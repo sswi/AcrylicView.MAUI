@@ -1,9 +1,18 @@
-﻿using Xe.AcrylicView.Controls;
+﻿using System.Diagnostics;
+using Xe.AcrylicView.Controls;
 
 namespace Xe.AcrylicView
 {
     public partial class AcrylicView : ContentView, IAcrylicView
     {
+
+        //protected override void OnSizeAllocated(double width, double height)
+        //{
+        //    Debug.WriteLine($"*******************{width}*{height}*****************************************");
+        //    base.OnSizeAllocated(width, height);
+        //}
+
+
         public static readonly BindableProperty TintColorProperty = BindableProperty.Create(
             nameof(TintColor),
             typeof(Color),
@@ -71,7 +80,7 @@ namespace Xe.AcrylicView
         }
 
 
-
+     
 
     }
 }

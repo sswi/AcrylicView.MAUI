@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using UIKit;
-
+using Xe.AcrylicView.Platforms.MacCatalyst;
 
 namespace Xe.AcrylicView.Controls
 {

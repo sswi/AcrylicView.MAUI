@@ -1,19 +1,17 @@
 ﻿using Android.Content;
-using Android.Graphics.Drawables;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Microsoft.Maui.Platform;
+using Xe.AcrylicView.Controls;
+using Color = Android.Graphics.Color;
 using Paint = Android.Graphics.Paint;
 using Path = Android.Graphics.Path;
-using Color = Android.Graphics.Color;
 using RectF = Android.Graphics.RectF;
-using Xe.AcrylicView.Controls;
-using Microsoft.Maui.Controls;
 
 namespace Xe.AcrylicView.Platforms.Android.Drawable
 {
     public class BorderDrawable : ColorDrawable
     {
-
         public BorderDrawable(Context context, IAcrylicView border)
         {
             //将背景色转换成 本机颜色
@@ -24,14 +22,10 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             Initialize(context, nativeColor2, nativeColor, border.BorderThickness, border.CornerRadius);
         }
 
-
-        public BorderDrawable(Context context,Thickness cornerRadius,Color color)
+        public BorderDrawable(Context context, Thickness cornerRadius, Color color)
         {
-            Initialize(context, Colors.Transparent.ToPlatform(), color,new Thickness(0), cornerRadius);
+            Initialize(context, Colors.Transparent.ToPlatform(), color, new Thickness(0), cornerRadius);
         }
-
-
-
 
         /// <summary>
         /// 绘制背景色和圆角
@@ -97,7 +91,6 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             return path;
         }
 
-
         /// <summary>
         /// 初始化各项值
         /// </summary>
@@ -107,8 +100,6 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             this.backgroundColor = backgroundColor;
             this.borderThickness = borderThickness;
             this.cornerRadius = cornerRadius;
-
-
             borderTopLeftRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Left);
             borderTopRightRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Top);
             borderBottomRightRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Right);
@@ -171,39 +162,27 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             };
         }
 
-
         private Color borderColor;
-
 
         private Color backgroundColor;
 
-
         private Thickness borderThickness;
-
 
         private Thickness cornerRadius;
 
-
         private float borderTopLeftRadius;
-
 
         private float borderTopRightRadius;
 
-
         private float borderBottomRightRadius;
-
 
         private float borderBottomLeftRadius;
 
-
         private float borderLeftWidth;
-
 
         private float borderTopWidth;
 
-
         private float borderRightWidth;
-
 
         private float borderBottomWidth;
     }

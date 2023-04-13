@@ -106,6 +106,8 @@ namespace Xe.AcrylicView.Controls
 
             colorBlendLayerAlpha = tintOpacity;
             colorBlendLayer.Alpha = colorBlendLayerAlpha;
+
+      
         }
 
         private static void MapContent(AcrylicViewHandler handler, IAcrylicView view)
@@ -155,6 +157,7 @@ namespace Xe.AcrylicView.Controls
             var nativView = handler?.PlatformView;
             if (nativView == null) return;
             handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view);
+ 
         }
 
         private void UpdateColorblendLayer(IAcrylicView view)

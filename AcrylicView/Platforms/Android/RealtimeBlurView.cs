@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Hardware.Lights;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -270,21 +271,16 @@ namespace Xe.AcrylicView.Platforms.Android
             _autoUpdate = true;
 
             using var handler = new Handler(Looper.MainLooper);
-
-            //获取根视图，实时获取 ，间隔100ms
-            //  using var handler = new Handler();
+            //获取根视图，实时获取 ，间隔100ms      
             handler.PostDelayed(
                 () =>
                 {
                     var mDecorView = GetRootView();
-                    if (mDecorView == null || !_autoUpdate)
-                    {
-                        return;
-                    }
+                    if (mDecorView == null || !_autoUpdate)             
+                        return;       
 
                     SubscribeToPreDraw(mDecorView);
                 },
-
                 //模糊自动更新延迟（毫秒）
                 100
                 //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds
@@ -294,16 +290,13 @@ namespace Xe.AcrylicView.Platforms.Android
         private void DisableAutoUpdate()
         {
             if (!_autoUpdate)
-            {
                 return;
-            }
 
             _autoUpdate = false;
             var mDecorView = GetRootView();
-            if (mDecorView == null)
-            {
-                return;
-            }
+
+            if (mDecorView == null) 
+                return; 
 
             UnsubscribeToPreDraw(mDecorView);
         }
@@ -413,10 +406,7 @@ namespace Xe.AcrylicView.Platforms.Android
             mBlurImpl.Blur(bitmapToBlur, blurredBitmap);
         }
 
-        public void OnPreDraw()
-        {
-            preDrawListener.OnPreDraw();
-        }
+
 
         private readonly PreDrawListener preDrawListener;
 
@@ -599,5 +589,13 @@ namespace Xe.AcrylicView.Platforms.Android
             mRadii[7] = bottomLeft;
             Invalidate();
         }
+
+
+        protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
+        {       
+            base.OnSizeChanged(w, h, oldw, oldh);
+            preDrawListener.OnPreDraw();
+        }
+
     }
 }
