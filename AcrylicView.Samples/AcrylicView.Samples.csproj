@@ -93,6 +93,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\XF.otf" />
 	  <None Remove="Resources\Images\nature.jpg" />
 	</ItemGroup>
 

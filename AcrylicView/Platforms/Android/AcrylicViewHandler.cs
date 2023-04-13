@@ -156,8 +156,7 @@ namespace Xe.AcrylicView.Controls
         {
             var nativView = handler?.PlatformView;
             if (nativView == null) return;
-            handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view);
- 
+            handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view); 
         }
 
         private void UpdateColorblendLayer(IAcrylicView view)
