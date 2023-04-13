@@ -1,5 +1,5 @@
 
-| Supported platforms        |
+|支持平台/Supported platforms        |
 |----------------------------|
 | :heavy_check_mark: Android | 
 | :heavy_check_mark: iOS     |
