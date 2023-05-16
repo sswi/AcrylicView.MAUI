@@ -95,15 +95,16 @@ namespace Xe.AcrylicView.Controls
                 return;
 
             var ver = UIDevice.CurrentDevice.SystemVersion;
-            if (!float.TryParse(ver, out float version))
-                return;
+            //if (!float.TryParse(ver, out float version))
+            //    return;
+
 
             var style = view.EffectStyle switch
             {
                 EffectStyle.Light => UIBlurEffectStyle.Light,
                 EffectStyle.Dark => UIBlurEffectStyle.Dark,
                 EffectStyle.ExtraLight => UIBlurEffectStyle.ExtraLight,
-                EffectStyle.ExtraDark => version >= 14.2 ? UIBlurEffectStyle.ExtraDark : UIBlurEffectStyle.Dark,
+                EffectStyle.ExtraDark => UIBlurEffectStyle.ExtraDark,
                 _ => UIBlurEffectStyle.Light
             };
             handler.acrylicEffectView.Effect = UIBlurEffect.FromStyle(style);
