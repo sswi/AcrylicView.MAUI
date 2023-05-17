@@ -32,7 +32,6 @@ namespace Xe.AcrylicView.Platforms.Android
                     // In release mode, just ignore
                     Release();
                     return false;
-
                 }
             }
 
