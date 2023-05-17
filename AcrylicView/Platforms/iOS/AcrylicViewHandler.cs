@@ -96,8 +96,9 @@ namespace Xe.AcrylicView.Controls
 
             var ver = UIDevice.CurrentDevice.SystemVersion;
 
-            //if (!float.TryParse(ver, out float version))  // //ExtraDark仅支持tvos
+            //if (!float.TryParse(ver, out float version))
             //    return;
+
 
             var style = view.EffectStyle switch
             {
