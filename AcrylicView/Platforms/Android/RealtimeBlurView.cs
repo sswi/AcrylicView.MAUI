@@ -594,6 +594,8 @@ namespace Xe.AcrylicView.Platforms.Android
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {       
             base.OnSizeChanged(w, h, oldw, oldh);
+
+            if (w>0 && h>0)  
             preDrawListener.OnPreDraw();
         }
 

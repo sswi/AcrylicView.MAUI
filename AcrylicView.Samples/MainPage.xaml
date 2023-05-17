@@ -15,6 +15,7 @@
 
 
 
+
             <Grid
                 Padding="20"
                 RowDefinitions="120,170,120,120,120,*"
@@ -26,6 +27,16 @@
                     CornerRadius="20"
                     EffectStyle="Light">
                     <Grid Padding="20,0" ColumnDefinitions="*,*,*,*">
+
+            
+            
+            
+            
+            <Grid RowDefinitions="120,170,120,120,120,*"  Padding="20" RowSpacing="30">
+
+                <ui:AcrylicView  EffectStyle="Light"  BorderColor="White" BorderThickness="0" CornerRadius="20" >
+                    <Grid ColumnDefinitions="*,*,*,*" Padding="20,0">
+
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 FontFamily="XF"

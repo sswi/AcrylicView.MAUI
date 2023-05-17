@@ -95,6 +95,7 @@ namespace Xe.AcrylicView.Controls
                 return;
 
             var ver = UIDevice.CurrentDevice.SystemVersion;
+
             //if (!float.TryParse(ver, out float version))
             //    return;
 
@@ -104,7 +105,7 @@ namespace Xe.AcrylicView.Controls
                 EffectStyle.Light => UIBlurEffectStyle.Light,
                 EffectStyle.Dark => UIBlurEffectStyle.Dark,
                 EffectStyle.ExtraLight => UIBlurEffectStyle.ExtraLight,
-                EffectStyle.ExtraDark => UIBlurEffectStyle.ExtraDark,
+                EffectStyle.ExtraDark => UIBlurEffectStyle.Dark,  //ExtraDark仅支持tvos
                 _ => UIBlurEffectStyle.Light
             };
             handler.acrylicEffectView.Effect = UIBlurEffect.FromStyle(style);

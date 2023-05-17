@@ -105,9 +105,7 @@ namespace Xe.AcrylicView.Controls
             colorBlendLayer.SetBackgroundDrawable(colorGradientDrawable);
 
             colorBlendLayerAlpha = tintOpacity;
-            colorBlendLayer.Alpha = colorBlendLayerAlpha;
-
-      
+            colorBlendLayer.Alpha = colorBlendLayerAlpha;      
         }
 
         private static void MapContent(AcrylicViewHandler handler, IAcrylicView view)
