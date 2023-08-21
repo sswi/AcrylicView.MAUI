@@ -30,7 +30,7 @@ namespace Xe.AcrylicView.Controls
         {
             colorBlendLayer = new View(Context);
 
-            realtimeBlurView = new RealtimeBlurView(Context);
+            realtimeBlurView = new RealtimeBlurView(Context, SetContentVisibel);
             realtimeBlurView.SetBlurRadius(100);
             realtimeBlurView.SetOverlayColor(Colors.Transparent.ToAndroid());
             realtimeBlurView.SetDownsampleFactor(2);
@@ -50,11 +50,29 @@ namespace Xe.AcrylicView.Controls
             return frame;
         }
 
+        private static void MapAndroidPerfect(AcrylicViewHandler handler, IAcrylicView view)
+        {
+            handler.androidPerfect = view.AndroidPerfect;
+        }
+
+        private bool androidPerfect = false;
+
+        /// <summary>
+        /// 控制获取视图层时顶层视图的透明图
+        /// </summary>
+        /// <param name="isVisibel"></param>
+        private void SetContentVisibel(bool isVisibel)
+        {
+            if (borderViewGroup == null || !androidPerfect) return;
+            borderViewGroup.Alpha = isVisibel ? 1f : 0f;
+        }
+
         private static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
         {
-            if (view.EffectStyle != EffectStyle.Custom)
-                return;
+            if (view.EffectStyle != EffectStyle.Custom) return;
+
             var nativView = handler?.PlatformView;
+
             if (nativView == null) return;
 
             handler.UpdateColorblendLayer(view);
@@ -62,13 +80,11 @@ namespace Xe.AcrylicView.Controls
 
         private static void MapTintOpacity(AcrylicViewHandler handler, IAcrylicView view)
         {
-            if (view.EffectStyle != EffectStyle.Custom)
-                return;
+            if (view.EffectStyle != EffectStyle.Custom) return;
 
-            if (view.TintColor == null || view.TintColor == Colors.Transparent)
-            {
-                return;
-            }
+
+            if (view.TintColor == null || view.TintColor == Colors.Transparent) return;
+            
             handler.colorBlendLayerAlpha = (float)view.TintOpacity;
             handler.colorBlendLayer.Alpha = handler.colorBlendLayerAlpha;
         }
@@ -105,7 +121,7 @@ namespace Xe.AcrylicView.Controls
             colorBlendLayer.SetBackgroundDrawable(colorGradientDrawable);
 
             colorBlendLayerAlpha = tintOpacity;
-            colorBlendLayer.Alpha = colorBlendLayerAlpha;      
+            colorBlendLayer.Alpha = colorBlendLayerAlpha;
         }
 
         private static void MapContent(AcrylicViewHandler handler, IAcrylicView view)
@@ -114,11 +130,11 @@ namespace Xe.AcrylicView.Controls
             if (nativView == null) return;
 
             handler.borderViewGroup.RemoveAllViews();
-
             if (view.Content is IView content && view.Handler != null)
             {
                 var view3 = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
                 handler.borderViewGroup.AddView(view3);
+                System.Diagnostics.Debug.WriteLine("内容改变");
             }
         }
 
@@ -126,7 +142,7 @@ namespace Xe.AcrylicView.Controls
         {
             var nativView = handler?.PlatformView;
             if (nativView == null) return;
-
+            handler.realtimeBlurView.SetBorderThickness(view.BorderThickness);
             PropertyChanged(handler, view);
         }
 
@@ -154,7 +170,7 @@ namespace Xe.AcrylicView.Controls
         {
             var nativView = handler?.PlatformView;
             if (nativView == null) return;
-            handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view); 
+            handler.borderViewGroup.BorderDrawable = new BorderDrawable(nativView.Context, view);
         }
 
         private void UpdateColorblendLayer(IAcrylicView view)

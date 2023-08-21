@@ -1,14 +1,13 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.Hardware.Lights;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Color = Android.Graphics.Color;
 using Math = System.Math;
 using Paint = Android.Graphics.Paint;
 using Path = Android.Graphics.Path;
-using Rect = Android.Graphics.Rect;
 using RectF = Android.Graphics.RectF;
 using View = Android.Views.View;
 
@@ -16,9 +15,7 @@ namespace Xe.AcrylicView.Platforms.Android
 {
     public class RealtimeBlurView : View
     {
-        private Path mPath = new Path();
-
-        private float[] mRadii = new float[8];
+        private readonly float[] mRadii = new float[8];
 
         private float mDownsampleFactor; // default 4
 
@@ -26,11 +23,7 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private float mBlurRadius; // default 10dp (0 < r <= 25)
 
-        //  private float mCornerRadius; // default 0
-
         private readonly IBlurImpl mBlurImpl;
-
-        //  private readonly string _formsId;
 
         private bool mDirty;
 
@@ -42,11 +35,8 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private readonly Paint mPaint;
 
-        private readonly Rect mRectSrc = new(), mRectDst = new();
-
         // mDecorView should be the root view of the activity (even if you are on a different window like a dialog)
         // private View mDecorView;
-
         private JniWeakReference<View> _weakDecorView;
 
         // If the view is on different root view (usually means we are on a PopupWindow),
@@ -60,9 +50,14 @@ namespace Xe.AcrylicView.Platforms.Android
         private static int RENDERING_COUNT;
 
         private static int BLUR_IMPL;
+        private Thickness borderThickness = new();
+
+        public delegate void SetContentVisibel(bool visible);
+
+        private readonly SetContentVisibel _contentSetVisibel;
 
         [Obsolete("此类库 在>=Android12 已经不再使用，谷歌已经更新了一套新的模糊操作类库")]
-        public RealtimeBlurView(Context context, string formsId = null) : base(context)
+        public RealtimeBlurView(Context context, SetContentVisibel visibel, string formsId = null) : base(context)
         {
             // provide your own by override getBlurImpl()
             mBlurImpl = GetBlurImpl();
@@ -74,10 +69,21 @@ namespace Xe.AcrylicView.Platforms.Android
             _autoUpdate = true;
 
             preDrawListener = new PreDrawListener(this);
+            _contentSetVisibel = visibel;
         }
 
         public RealtimeBlurView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
+        }
+
+        /// <summary>
+        /// 设置边框
+        /// </summary>
+        /// <param name="borderThickness"></param>
+        public void SetBorderThickness(Thickness borderThickness)
+        {
+            this.borderThickness = borderThickness;
+            preDrawListener.OnPreDraw(borderThickness, _contentSetVisibel);
         }
 
         protected IBlurImpl GetBlurImpl()
@@ -111,9 +117,7 @@ namespace Xe.AcrylicView.Platforms.Android
         public void SetDownsampleFactor(float factor)
         {
             if (factor <= 0)
-            {
                 throw new ArgumentException("Downsample factor must be greater than 0.");
-            }
 
             if (mDownsampleFactor != factor)
             {
@@ -126,21 +130,14 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void SubscribeToPreDraw(View decorView)
         {
-            //判断上层视图是否为空 或 视图树为空
-            if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed())
-            {
-                return;
-            }
-            //添加预绘制侦听器
+            if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed()) return;
+
             decorView.ViewTreeObserver.AddOnPreDrawListener(preDrawListener);
         }
 
         private void UnsubscribeToPreDraw(View decorView)
         {
-            if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed())
-            {
-                return;
-            }
+            if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed()) return;
 
             decorView.ViewTreeObserver.RemoveOnPreDrawListener(preDrawListener);
         }
@@ -148,9 +145,7 @@ namespace Xe.AcrylicView.Platforms.Android
         public void Destroy()
         {
             if (_weakDecorView != null && _weakDecorView.TryGetTarget(out var mDecorView))
-            {
                 UnsubscribeToPreDraw(mDecorView);
-            }
 
             Release();
             _weakDecorView = null;
@@ -160,33 +155,24 @@ namespace Xe.AcrylicView.Platforms.Android
         {
             SetRootView(null);
             ReleaseBitmap();
-
             mBlurImpl?.Release();
         }
 
         public void SetBlurRadius(float radius, bool invalidate = true)
         {
-            if (mBlurRadius != radius)
-            {
-                mBlurRadius = radius;
-                mDirty = true;
-                if (invalidate)
-                {
-                    Invalidate();
-                }
-            }
+            if (mBlurRadius == radius) return;
+            mBlurRadius = radius;
+            mDirty = true;
+            if (invalidate)
+                Invalidate();
         }
 
         public void SetOverlayColor(int color, bool invalidate = true)
         {
-            if (mOverlayColor != color)
-            {
-                mOverlayColor = color;
-                if (invalidate)
-                {
-                    Invalidate();
-                }
-            }
+            if (mOverlayColor == color) return;
+            mOverlayColor = color;
+            if (invalidate)
+                Invalidate();
         }
 
         public void SetRootView(View rootView)
@@ -217,21 +203,15 @@ namespace Xe.AcrylicView.Platforms.Android
             if (mDecorView != null)
             {
                 using var handler = new Handler(Looper.MainLooper);
-
-                //  using var handler = new Handler();
                 handler.PostDelayed(() =>
                 {
                     SubscribeToPreDraw(mDecorView);
                     mDifferentRoot = mDecorView.RootView != RootView;
                     if (mDifferentRoot)
-                    {
                         mDecorView.PostInvalidate();
-                    }
                 },
-                    //模糊处理延迟毫秒
-                    //AndroidMaterialFrameRenderer.BlurProcessingDelayMilliseconds
-                    10
-                    );
+                    16  //AndroidMaterialFrameRenderer.BlurProcessingDelayMilliseconds 模糊处理延迟毫秒
+                 );
             }
             else
             {
@@ -263,27 +243,18 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void EnableAutoUpdate()
         {
-            if (_autoUpdate)
-            {
-                return;
-            }
+            if (_autoUpdate) return;
 
             _autoUpdate = true;
-
             using var handler = new Handler(Looper.MainLooper);
-            //获取根视图，实时获取 ，间隔100ms      
-            handler.PostDelayed(
-                () =>
-                {
-                    var mDecorView = GetRootView();
-                    if (mDecorView == null || !_autoUpdate)             
-                        return;       
-
-                    SubscribeToPreDraw(mDecorView);
-                },
-                //模糊自动更新延迟（毫秒）
-                100
-                //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds
+            //获取根视图，实时获取 ，间隔100ms
+            handler.PostDelayed(() =>
+                 {
+                     var mDecorView = GetRootView();
+                     if (mDecorView == null || !_autoUpdate) return;
+                     SubscribeToPreDraw(mDecorView);
+                 },
+                100   //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds 模糊自动更新延迟（毫秒）
                 );
         }
 
@@ -295,8 +266,8 @@ namespace Xe.AcrylicView.Platforms.Android
             _autoUpdate = false;
             var mDecorView = GetRootView();
 
-            if (mDecorView == null) 
-                return; 
+            if (mDecorView == null)
+                return;
 
             UnsubscribeToPreDraw(mDecorView);
         }
@@ -323,7 +294,6 @@ namespace Xe.AcrylicView.Platforms.Android
                 Release();
                 return false;
             }
-
             float downsampleFactor = mDownsampleFactor;
             float radius = mBlurRadius / downsampleFactor;
             if (radius > 25)
@@ -331,39 +301,27 @@ namespace Xe.AcrylicView.Platforms.Android
                 downsampleFactor = downsampleFactor * radius / 25;
                 radius = 25;
             }
-
             int width = Width;
             int height = Height;
-
             int scaledWidth = Math.Max(1, (int)(width / downsampleFactor));
             int scaledHeight = Math.Max(1, (int)(height / downsampleFactor));
-
             bool dirty = mDirty;
 
-            if (mBlurringCanvas == null
-                || mBlurredBitmap == null
-                || mBlurredBitmap.Width != scaledWidth
-                || mBlurredBitmap.Height != scaledHeight)
+            if (mBlurringCanvas == null || mBlurredBitmap == null || mBlurredBitmap.Width != scaledWidth || mBlurredBitmap.Height != scaledHeight)
             {
                 dirty = true;
                 ReleaseBitmap();
-
                 bool r = false;
                 try
                 {
                     mBitmapToBlur = Bitmap.CreateBitmap(scaledWidth, scaledHeight, Bitmap.Config.Argb8888);
-                    if (mBitmapToBlur == null)
-                    {
-                        return false;
-                    }
+
+                    if (mBitmapToBlur == null) return false;
 
                     mBlurringCanvas = new Canvas(mBitmapToBlur);
-
                     mBlurredBitmap = Bitmap.CreateBitmap(scaledWidth, scaledHeight, Bitmap.Config.Argb8888);
-                    if (mBlurredBitmap == null)
-                    {
-                        return false;
-                    }
+
+                    if (mBlurredBitmap == null) return false;
 
                     r = true;
                 }
@@ -375,15 +333,10 @@ namespace Xe.AcrylicView.Platforms.Android
                 finally
                 {
                     if (!r)
-                    {
                         Release();
-                    }
                 }
 
-                if (!r)
-                {
-                    return false;
-                }
+                if (!r) return false;
             }
 
             if (dirty)
@@ -397,7 +350,6 @@ namespace Xe.AcrylicView.Platforms.Android
                     return false;
                 }
             }
-
             return true;
         }
 
@@ -405,8 +357,6 @@ namespace Xe.AcrylicView.Platforms.Android
         {
             mBlurImpl.Blur(bitmapToBlur, blurredBitmap);
         }
-
-
 
         private readonly PreDrawListener preDrawListener;
 
@@ -417,14 +367,35 @@ namespace Xe.AcrylicView.Platforms.Android
             public PreDrawListener(RealtimeBlurView blurView)
             {
                 _weakBlurView = new JniWeakReference<RealtimeBlurView>(blurView);
+                _density = DeviceDisplay.Current.MainDisplayInfo.Density;
             }
 
             public PreDrawListener(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer)
             {
             }
 
+            /// <summary>
+            /// 屏幕缩放率
+            /// </summary>
+            private readonly double _density;
+
+            private Thickness _borderThickness = new();
+
+            /// <summary>
+            /// 控制顶层视图透明度
+            /// </summary>
+            private SetContentVisibel _setContentVisibel;
+
+            public void OnPreDraw(Thickness thickness, SetContentVisibel setContentvisibel)
+            {
+                _borderThickness = thickness;
+                _setContentVisibel = setContentvisibel;
+                OnPreDraw();
+            }
+
             public bool OnPreDraw()
             {
+                _setContentVisibel(false);
                 if (!_weakBlurView.TryGetTarget(out var blurView))
                 {
                     return false;
@@ -434,32 +405,34 @@ namespace Xe.AcrylicView.Platforms.Android
                 {
                     return false;
                 }
-
                 var mDecorView = blurView.GetRootView();
 
                 int[] locations = new int[2];
                 Bitmap oldBmp = blurView.mBlurredBitmap;
                 View decor = mDecorView;
+
                 if (!decor.IsNullOrDisposed() && blurView.IsShown && blurView.Prepare())
                 {
                     bool redrawBitmap = blurView.mBlurredBitmap != oldBmp;
-                    decor.GetLocationOnScreen(locations);
-                    int x = -locations[0];
-                    int y = -locations[1];
 
+                    //获取view所在的左上角位置
+                    decor.GetLocationOnScreen(locations);
                     blurView.GetLocationOnScreen(locations);
-                    x += locations[0] > 5 ? locations[0] - 5 : locations[0];  //-5  为了不受BorderColor的影响
-                    y += locations[1] > 5 ? locations[1] - 5 : locations[1];
+
+                    //计算边框宽高，避免截图时候把边框也算进去造成边缘有虚化颜色
+                    float x = _borderThickness.Left > 0 ? (float)(locations[0] + _borderThickness.Left * _density) : locations[0];
+                    float y = _borderThickness.Top > 0 ? (float)(locations[1] + _borderThickness.Top * _density) : locations[1];
 
                     // just erase transparent
-                    blurView.mBitmapToBlur.EraseColor(blurView.mOverlayColor & 0xffffff);
-
+                    blurView.mBitmapToBlur.EraseColor(Color.Transparent);
                     int rc = blurView.mBlurringCanvas.Save();
                     blurView.mIsRendering = true;
                     RENDERING_COUNT++;
                     try
                     {
-                        blurView.mBlurringCanvas.Scale(1f * blurView.mBitmapToBlur.Width / blurView.Width, 1f * blurView.mBitmapToBlur.Height / blurView.Height);
+                        float _borderWidth = (float)(_density * (_borderThickness.Left + _borderThickness.Right));
+                        float _borderHeight = (float)(_density * (_borderThickness.Top + _borderThickness.Bottom));
+                        blurView.mBlurringCanvas.Scale((blurView.mBitmapToBlur.Width + _borderWidth) / blurView.Width, (blurView.mBitmapToBlur.Height + _borderHeight) / blurView.Height);
                         blurView.mBlurringCanvas.Translate(-x, -y);
                         decor.Background?.Draw(blurView.mBlurringCanvas);
                         decor.Draw(blurView.mBlurringCanvas);
@@ -471,7 +444,7 @@ namespace Xe.AcrylicView.Platforms.Android
                         blurView.mBlurringCanvas.RestoreToCount(rc);
                     }
                     blurView.Blur(blurView.mBitmapToBlur, blurView.mBlurredBitmap);
-
+                    _setContentVisibel(true);
                     if (redrawBitmap || blurView.mDifferentRoot)
                     {
                         blurView.Invalidate();
@@ -490,14 +463,7 @@ namespace Xe.AcrylicView.Platforms.Android
                 ctx = wrapper.BaseContext;
             }
 
-            if (ctx is Activity activity)
-            {
-                return activity.Window.DecorView;
-            }
-            else
-            {
-                return null;
-            }
+            return (ctx is Activity activity) ? activity.Window.DecorView : null;
         }
 
         protected override void OnAttachedToWindow()
@@ -519,42 +485,32 @@ namespace Xe.AcrylicView.Platforms.Android
         {
             var mDecorView = GetRootView();
             if (mDecorView != null)
-            {
                 UnsubscribeToPreDraw(mDecorView);
-            }
+
             Release();
             base.OnDetachedFromWindow();
         }
 
         public override void Draw(Canvas canvas)
         {
-            if (mIsRendering)
-            {
-                return;
-            }
+            if (mIsRendering) return;
 
-            if (RENDERING_COUNT > 0)
-            {
-            }
-            else
-            {
+            if (RENDERING_COUNT <= 0)
                 base.Draw(canvas);
-            }
         }
 
         protected override void OnDraw(Canvas canvas)
         {
             base.OnDraw(canvas);
-            DrawRoundedBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor);
+            DrawRoundedBlurredBitmap(canvas, mBlurredBitmap);
         }
 
         //绘制圆角模糊视图
-        private void DrawRoundedBlurredBitmap(Canvas canvas, Bitmap blurredBitmap, int overlayColor)
+        private void DrawRoundedBlurredBitmap(Canvas canvas, Bitmap blurredBitmap)
         {
             if (blurredBitmap != null)
             {
                 var mRectF = new RectF { Right = Width, Bottom = Height };
-
                 mPaint.Reset();
                 mPaint.AntiAlias = true;
                 var shader = new BitmapShader(blurredBitmap, Shader.TileMode.Clamp, Shader.TileMode.Clamp);
@@ -562,7 +518,6 @@ namespace Xe.AcrylicView.Platforms.Android
                 matrix.PostScale(mRectF.Width() / blurredBitmap.Width, mRectF.Height() / blurredBitmap.Height);
                 shader.SetLocalMatrix(matrix);
                 mPaint.SetShader(shader);
-
                 var path2 = new Path();
                 path2.AddRoundRect(mRectF, mRadii, Path.Direction.Cw);
                 canvas.DrawPath(path2, mPaint);
@@ -572,10 +527,10 @@ namespace Xe.AcrylicView.Platforms.Android
         public void SetCornerRadius(float topLeft, float topRight, float bottomRight, float bottomLeft)
         {
             var radius = new float[8] { topLeft, topLeft, topRight, topRight, bottomRight, bottomRight, bottomLeft, bottomLeft };
-            if (mRadii == radius)
-                return;
+            if (mRadii == radius) return;
 
             mDirty = true;
+
             mRadii[0] = topLeft;
             mRadii[1] = topLeft;
 
@@ -587,17 +542,15 @@ namespace Xe.AcrylicView.Platforms.Android
 
             mRadii[6] = bottomLeft;
             mRadii[7] = bottomLeft;
+
             Invalidate();
         }
 
-
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
-        {       
+        {
             base.OnSizeChanged(w, h, oldw, oldh);
-
-            if (w>0 && h>0)  
-            preDrawListener.OnPreDraw();
+            if (w > 0 && h > 0)
+                preDrawListener.OnPreDraw(borderThickness, _contentSetVisibel);
         }
-
     }
 }

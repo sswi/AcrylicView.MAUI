@@ -105,6 +105,12 @@
 	  <ProjectReference Include="..\AcrylicView\AcrylicView.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="NewPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadWrongLinkerErrorInfoBarAcrylicViewSamplesHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 

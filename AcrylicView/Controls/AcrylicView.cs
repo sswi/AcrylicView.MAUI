@@ -28,6 +28,12 @@ namespace Xe.AcrylicView
             typeof(double),
             typeof(AcrylicView), 0.0);
 
+
+        public static readonly BindableProperty AndroidPerfectProperty = BindableProperty.Create(
+            nameof(AndroidPerfect),
+            typeof(bool),
+            typeof(AcrylicView), false);
+
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);
@@ -62,5 +68,17 @@ namespace Xe.AcrylicView
             get => (double)GetValue(TintOpacityProperty);
             set => SetValue(TintOpacityProperty, value);
         }
+
+        /// <summary>
+        /// Warning！！！|注意啦！
+        /// OnlyAndroid/仅安卓系统可用
+        /// Enabling this option will affect system performance/启用此项会完美显示，不会泛光，同时将会影响系统性能，因为会不停地对区域进行监听绘制  
+        /// </summary>
+        public bool AndroidPerfect
+        {
+            get => (bool)GetValue(AndroidPerfectProperty);
+            set => SetValue(AndroidPerfectProperty, value);
+        }
+
     }
 }

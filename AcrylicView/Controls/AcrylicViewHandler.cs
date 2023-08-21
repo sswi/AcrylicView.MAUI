@@ -12,7 +12,10 @@ namespace Xe.AcrylicView.Controls
             [nameof(IAcrylicView.EffectStyle)] = MapEffectStyle,
             [nameof(IAcrylicView.Content)] = MapContent,
             [nameof(IAcrylicView.BorderThickness)] = MapBorderThickness,
-            [nameof(IAcrylicView.BorderColor)] = MapBorderColor
+            [nameof(IAcrylicView.BorderColor)] = MapBorderColor,
+#if ANDROID
+            [nameof(IAcrylicView.AndroidPerfect)] = MapAndroidPerfect
+#endif
         };
 
 
