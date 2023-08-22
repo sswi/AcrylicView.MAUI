@@ -106,7 +106,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// <summary>
         /// 获取默认尺寸
         /// </summary>
-        private double GetDefaultSize(MeasureSpecMode mode, double minSize, double desiredSize, double constraint)
+        private static double GetDefaultSize(MeasureSpecMode mode, double minSize, double desiredSize, double constraint)
         {
             if (mode == MeasureSpecMode.AtMost)
             {
@@ -123,5 +123,9 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// 底色 圆角 画板
         /// </summary>
         private BorderDrawable borderDrawable;
+
+
+
+
     }
 }

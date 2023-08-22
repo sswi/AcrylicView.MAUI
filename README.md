@@ -7,6 +7,9 @@
 | :heavy_check_mark: Windows |
 
 
+NugetPackage：AcrylicView.Maui
+
+![231667033-e99ed65b-d74a-4e70-9e89-0958afdc5e45](https://github.com/sswi/AcrylicView.MAUI/assets/39110708/1e05f06c-7d43-403a-8f83-74d9436c44f3)
 MauiProgram.cs
 
 ```csharp
@@ -21,7 +24,7 @@ using Xe.AcrylicView;
             builder
                 .UseMauiApp<App>()
                 
-                .UseAcrylicView()  //*********  Use
+                .UseAcrylicView()  //*********  usage
                 
                 
                 .ConfigureFonts(fonts =>
@@ -49,7 +52,8 @@ using Xe.AcrylicView;
                 TintOpacity=".15 "  
                 BorderColor="OrangeRed" 
                 BorderThickness="1,2" 
-                CornerRadius="50,10,30,20" >           
+                CornerRadius="50,10,30,20"
+                >           
    <Grid>
     <Label Text="Hello Word" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" TextColor="OrangeRed"/>    
    </Grid>
@@ -58,10 +62,18 @@ using Xe.AcrylicView;
 
 
 
+|----------------------------|
+| :heavy_check_mark: Android | 
+| :heavy_check_mark: iOS     |
+| :heavy_check_mark: macOS   |
+| :heavy_check_mark: Windows |
+
+
 
 Android平台的实现方式是从这个仓库获取，从Xamarin.Forms简单移植过来的，请支持原作者：
 https://github.com/roubachof/Sharpnado.MaterialFrame
 
 
 
-![02](https://user-images.githubusercontent.com/39110708/231667033-e99ed65b-d74a-4e70-9e89-0958afdc5e45.png)
+
+

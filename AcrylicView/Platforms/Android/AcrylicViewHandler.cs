@@ -31,18 +31,17 @@ namespace Xe.AcrylicView.Controls
             colorBlendLayer = new View(Context);
 
             realtimeBlurView = new RealtimeBlurView(Context, SetContentVisibel);
-            realtimeBlurView.SetBlurRadius(100);
+            realtimeBlurView.SetBlurRadius(120);
             realtimeBlurView.SetOverlayColor(Colors.Transparent.ToAndroid());
-            realtimeBlurView.SetDownsampleFactor(2);
+            realtimeBlurView.SetDownsampleFactor(4);
 
             borderViewGroup = new BorderViewGroup(Context)
             {
                 CrossPlatformMeasure = new Func<double, double, Size>(VirtualView.CrossPlatformMeasure),
                 CrossPlatformArrange = new Func<Rect, Size>(VirtualView.CrossPlatformArrange)
             };
-
+            
             var frame = new FrameLayout(Context);
-
             frame.AddView(realtimeBlurView);
             frame.AddView(colorBlendLayer);
             frame.AddView(borderViewGroup);
@@ -50,12 +49,9 @@ namespace Xe.AcrylicView.Controls
             return frame;
         }
 
-        private static void MapAndroidPerfect(AcrylicViewHandler handler, IAcrylicView view)
-        {
-            handler.androidPerfect = view.AndroidPerfect;
-        }
 
-        private bool androidPerfect = false;
+
+
 
         /// <summary>
         /// 控制获取视图层时顶层视图的透明图
@@ -63,8 +59,10 @@ namespace Xe.AcrylicView.Controls
         /// <param name="isVisibel"></param>
         private void SetContentVisibel(bool isVisibel)
         {
-            if (borderViewGroup == null || !androidPerfect) return;
+       
+            if (borderViewGroup == null ) return;            
             borderViewGroup.Alpha = isVisibel ? 1f : 0f;
+            
         }
 
         private static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
@@ -102,7 +100,7 @@ namespace Xe.AcrylicView.Controls
                     break;
 
                 case EffectStyle.Light:
-                    handler.UpdateEffectStyle(view, Colors.White, 0.1f);
+                    handler.UpdateEffectStyle(view, Colors.White, 0.05f);
                     break;
 
                 case EffectStyle.ExtraLight:
@@ -134,7 +132,7 @@ namespace Xe.AcrylicView.Controls
             {
                 var view3 = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
                 handler.borderViewGroup.AddView(view3);
-                System.Diagnostics.Debug.WriteLine("内容改变");
+              
             }
         }
 
