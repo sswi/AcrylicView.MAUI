@@ -63,9 +63,3 @@ using Xe.AcrylicView;
 Android平台的实现方式是从这个仓库获取，从Xamarin.Forms简单移植过来的，请支持原作者：
 https://github.com/roubachof/Sharpnado.MaterialFrame
 
-
-
-
-
-
-![02](https://user-images.githubusercontent.com/39110708/231667033-e99ed65b-d74a-4e70-9e89-0958afdc5e45.png)
