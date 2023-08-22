@@ -14,7 +14,7 @@ MauiProgram.cs
 
 ```csharp
 
-using Xe.AcrylicView;
+using Xe.AcrylicView; //***1.引入 |import
 
     public static class MauiProgram
     {
@@ -24,7 +24,7 @@ using Xe.AcrylicView;
             builder
                 .UseMauiApp<App>()
                 
-                .UseAcrylicView()  //*********  usage
+                .UseAcrylicView()  //*********2.添加此扩展方法使用 | Usage
                 
                 
                 .ConfigureFonts(fonts =>
@@ -59,6 +59,14 @@ using Xe.AcrylicView;
 </ui:AcrylicView>
 ```
 
+| 属性名 / Property Name  | 类型 / Type | 描述 / Detail | 默认值 / Default |
+| ------------- | ------------- | ------------- | ------------- |
+| 效果 / EffectStyle  | 枚举 / Enumeration  | ExtraLight,Light,Dark,ExtraDark,Custom  | 亮效果 / Light |
+| 色调 / TintColor | 颜色 / Color  | 混合颜色 / Colors | 透明色 / Transparent |
+| 色调深度 / TintOpacity | 双精度小数 / double  | 色调不透明度 / Opacity | 透明 / 0.0 |
+| 边框颜色 / BorderColor | 颜色 / Color  | Colors | 透明色 / Transparent |
+| 边框厚度 / BorderThickness | 厚度 / Thickness  | Thickness | 无边框 / Thickness(0) |
+| 圆角半径 / CornerRadius | 厚度 / Thickness  | Thickness | 直角 / Thickness(0) |
 
 Android平台的实现方式是从这个仓库获取，从Xamarin.Forms简单移植过来的，请支持原作者：
 https://github.com/roubachof/Sharpnado.MaterialFrame
