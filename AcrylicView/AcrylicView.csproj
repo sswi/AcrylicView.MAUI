@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst;net7.0-android;net7.0-ios;net7.0-maccatalyst;</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net7.0-android;net7.0-ios;net7.0-maccatalyst;</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0;net7.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<UseMaui>true</UseMaui>
@@ -22,11 +22,13 @@
 		<Authors>xecc</Authors>
 		<Company>xecc</Company>
 		<Copyright>xecc</Copyright>
-		<Description>.Net Maui  平台实现的亚克力效果视图，支持win、安卓、苹果
-AcrylicView, Windows,Android,iOS,Mac
+		<Description>.Net Maui  平台实现的亚克力效果视图，
+支持：Windows、安卓、苹果
 
+AcrylicView：Acrylic Effect View on the .Net MAUI
+Support Platform：Windows,Android,iOS,Mac
 </Description>
-		<Version>2.0.01</Version>
+		<Version>2.1</Version>
 		<PackageProjectUrl>https://github.com/sswi/AcrylicView.MAUI</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/sswi/AcrylicView.MAUI</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -38,7 +40,7 @@ AcrylicView, Windows,Android,iOS,Mac
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
 

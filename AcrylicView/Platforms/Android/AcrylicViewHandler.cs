@@ -40,7 +40,7 @@ namespace Xe.AcrylicView.Controls
                 CrossPlatformMeasure = new Func<double, double, Size>(VirtualView.CrossPlatformMeasure),
                 CrossPlatformArrange = new Func<Rect, Size>(VirtualView.CrossPlatformArrange)
             };
-            
+
             var frame = new FrameLayout(Context);
             frame.AddView(realtimeBlurView);
             frame.AddView(colorBlendLayer);
@@ -49,20 +49,14 @@ namespace Xe.AcrylicView.Controls
             return frame;
         }
 
-
-
-
-
         /// <summary>
         /// 控制获取视图层时顶层视图的透明图
         /// </summary>
         /// <param name="isVisibel"></param>
         private void SetContentVisibel(bool isVisibel)
         {
-       
-            if (borderViewGroup == null ) return;            
+            if (borderViewGroup == null) return;
             borderViewGroup.Alpha = isVisibel ? 1f : 0f;
-            
         }
 
         private static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
@@ -80,9 +74,8 @@ namespace Xe.AcrylicView.Controls
         {
             if (view.EffectStyle != EffectStyle.Custom) return;
 
-
             if (view.TintColor == null || view.TintColor == Colors.Transparent) return;
-            
+
             handler.colorBlendLayerAlpha = (float)view.TintOpacity;
             handler.colorBlendLayer.Alpha = handler.colorBlendLayerAlpha;
         }
@@ -132,7 +125,6 @@ namespace Xe.AcrylicView.Controls
             {
                 var view3 = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
                 handler.borderViewGroup.AddView(view3);
-              
             }
         }
 

@@ -72,8 +72,6 @@ namespace Xe.AcrylicView.Platforms.Android
             _contentSetVisibel = visibel;
         }
 
-
-
         public RealtimeBlurView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
         }
@@ -90,7 +88,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected IBlurImpl GetBlurImpl()
         {
-          
             try
             {
                 AndroidStockBlurImpl impl = new();
@@ -119,7 +116,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         public void SetDownsampleFactor(float factor)
         {
-         
             if (factor <= 0)
                 throw new ArgumentException("Downsample factor must be greater than 0.");
 
@@ -134,7 +130,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void SubscribeToPreDraw(View decorView)
         {
-          
             if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed()) return;
 
             decorView.ViewTreeObserver.AddOnPreDrawListener(preDrawListener);
@@ -142,7 +137,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void UnsubscribeToPreDraw(View decorView)
         {
-        
             if (decorView.IsNullOrDisposed() || decorView.ViewTreeObserver.IsNullOrDisposed()) return;
 
             decorView.ViewTreeObserver.RemoveOnPreDrawListener(preDrawListener);
@@ -150,7 +144,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         public void Destroy()
         {
-       
             if (_weakDecorView != null && _weakDecorView.TryGetTarget(out var mDecorView))
                 UnsubscribeToPreDraw(mDecorView);
 
@@ -160,7 +153,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         public void Release()
         {
-           
             SetRootView(null);
             ReleaseBitmap();
             mBlurImpl?.Release();
@@ -185,7 +177,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         public void SetRootView(View rootView)
         {
-          
             var mDecorView = GetRootView();
             if (mDecorView != rootView)
             {
@@ -202,7 +193,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private View GetRootView()
         {
-          
             View mDecorView = null;
             _weakDecorView?.TryGetTarget(out mDecorView);
             return mDecorView;
@@ -210,7 +200,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void OnAttached(View mDecorView)
         {
-           
             if (mDecorView != null)
             {
                 using var handler = new Handler(Looper.MainLooper);
@@ -232,7 +221,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected override void OnVisibilityChanged(View changedView, [GeneratedEnum] ViewStates visibility)
         {
-         
             base.OnVisibilityChanged(changedView, visibility);
 
             if (changedView.GetType().Name == "PageContainer")
@@ -244,7 +232,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void SetAutoUpdate(bool autoUpdate)
         {
-     
             if (autoUpdate)
             {
                 EnableAutoUpdate();
@@ -256,7 +243,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void EnableAutoUpdate()
         {
-          
             if (_autoUpdate) return;
 
             _autoUpdate = true;
@@ -274,7 +260,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void DisableAutoUpdate()
         {
-         
             if (!_autoUpdate)
                 return;
 
@@ -289,7 +274,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private void ReleaseBitmap()
         {
-          
             if (!mBitmapToBlur.IsNullOrDisposed())
             {
                 mBitmapToBlur.Recycle();
@@ -305,7 +289,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected bool Prepare()
         {
-         
             if (mBlurRadius == 0)
             {
                 Release();
@@ -385,7 +368,6 @@ namespace Xe.AcrylicView.Platforms.Android
             {
                 _weakBlurView = new JniWeakReference<RealtimeBlurView>(blurView);
                 _density = DeviceDisplay.Current.MainDisplayInfo.Density;
-          
             }
 
             public PreDrawListener(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer)
@@ -411,15 +393,15 @@ namespace Xe.AcrylicView.Platforms.Android
                 OnPreDraw();
             }
 
+            private int i = 0;
 
-            int  i=0;
             public bool OnPreDraw()
             {
                 if (i == 2)
                 {
-                    i=0;
+                    i = 0;
                     return true;
-                }                
+                }
                 _setContentVisibel(false);
                 i++;
                 if (!_weakBlurView.TryGetTarget(out var blurView))
@@ -470,21 +452,20 @@ namespace Xe.AcrylicView.Platforms.Android
                         blurView.mBlurringCanvas.RestoreToCount(rc);
                     }
                     blurView.Blur(blurView.mBitmapToBlur, blurView.mBlurredBitmap);
-                            
+
                     if (redrawBitmap || blurView.mDifferentRoot)
                     {
                         blurView.Invalidate();
                     }
                 }
-                
-                _setContentVisibel(true);                
+
+                _setContentVisibel(true);
                 return true;
             }
         }
 
         protected View GetActivityDecorView()
         {
-     
             Context ctx = Context;
             for (int i = 0; i < 4 && ctx != null && ctx is not Activity && ctx is ContextWrapper wrapper; i++)
             {
@@ -496,7 +477,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected override void OnAttachedToWindow()
         {
-          
             base.OnAttachedToWindow();
 
             var mDecorView = GetRootView();
@@ -512,7 +492,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected override void OnDetachedFromWindow()
         {
-         
             var mDecorView = GetRootView();
             if (mDecorView != null)
                 UnsubscribeToPreDraw(mDecorView);
@@ -523,16 +502,14 @@ namespace Xe.AcrylicView.Platforms.Android
 
         public override void Draw(Canvas canvas)
         {
-          
             if (mIsRendering) return;
-            
+
             if (RENDERING_COUNT <= 0)
                 base.Draw(canvas);
         }
 
         protected override void OnDraw(Canvas canvas)
         {
-            
             base.OnDraw(canvas);
             DrawRoundedBlurredBitmap(canvas, mBlurredBitmap);
         }
@@ -580,7 +557,6 @@ namespace Xe.AcrylicView.Platforms.Android
 
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {
-           
             base.OnSizeChanged(w, h, oldw, oldh);
             if (w > 0 && h > 0)
                 preDrawListener.OnPreDraw(borderThickness, _contentSetVisibel);
