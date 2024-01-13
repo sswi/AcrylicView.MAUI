@@ -1,6 +1,4 @@
-﻿
-
-namespace Xe.AcrylicView.Controls
+﻿namespace Xe.AcrylicView.Controls
 {
     public partial class AcrylicViewHandler
     {
@@ -12,22 +10,18 @@ namespace Xe.AcrylicView.Controls
             [nameof(IAcrylicView.EffectStyle)] = MapEffectStyle,
             [nameof(IAcrylicView.Content)] = MapContent,
             [nameof(IAcrylicView.BorderThickness)] = MapBorderThickness,
-            [nameof(IAcrylicView.BorderColor)] = MapBorderColor
+            [nameof(IAcrylicView.BorderColor)] = MapBorderColor,
+#if WINDOWS
+            [nameof(IAcrylicView.Padding)] = MapPadding,
+#endif
         };
-
-
-
-
 
         public AcrylicViewHandler() : base(AcrylicViewMapper)
         {
-
-
         }
 
         public AcrylicViewHandler(PropertyMapper mapper) : base(mapper)
         {
-
         }
     }
 }

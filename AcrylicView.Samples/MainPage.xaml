@@ -8,208 +8,342 @@
 
     <ContentPage.Resources>
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="TextColor" Value="White" />
         </Style>
     </ContentPage.Resources>
 
     <Grid IgnoreSafeArea="True">
-        <Image Aspect="AspectFill" Source="nature.jpg"/>
+        <Image Aspect="AspectFill" Source="nature.jpg" />
 
         <ScrollView>
-            <Grid RowDefinitions="120,170,120,120,120,auto"  Padding="20" RowSpacing="20" MinimumWidthRequest="450">
+            <Grid
+                Padding="20"
+                MinimumWidthRequest="450"
+                RowDefinitions="120,170,120,120,120,auto,auto"
+                RowSpacing="20">
 
-                <ui:AcrylicView  EffectStyle="Light"  BorderColor="White" BorderThickness="1" CornerRadius="20" >
-                    <Grid ColumnDefinitions="*,*,*,*" Padding="20,0">
+                <ui:AcrylicView
+                    BorderColor="White"
+                    BorderThickness="1"
+                    CornerRadius="20"
+                    EffectStyle="Light">
+                    <Grid Padding="20,0" ColumnDefinitions="*,*,*,*">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label   FontFamily="XF"   FontSize="60"    Text="&#xE72F;"   />
+                            <Label
+                                FontFamily="XF"
+                                FontSize="60"
+                                Text="&#xE72F;" />
                             <Label HorizontalOptions="Center" Text="QQ" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout    Grid.Column="1"  HorizontalOptions="Center"  VerticalOptions="Center">
-                            <Label   FontFamily="XF"   FontSize="60"    Text="&#xE71F;"    />
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="60"
+                                Text="&#xE71F;" />
                             <Label HorizontalOptions="Center" Text="AliPay" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout   Grid.Column="2"   HorizontalOptions="Center"   VerticalOptions="Center">
-                            <Label  FontFamily="XF"  FontSize="60"   Text="&#xE738;"   />
+                        <VerticalStackLayout
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="60"
+                                Text="&#xE738;" />
                             <Label HorizontalOptions="Center" Text="WeChat" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout   Grid.Column="3"  HorizontalOptions="Center"   VerticalOptions="Center">
-                            <Label  FontFamily="XF"  FontSize="60"    Text="&#xE6F8;"  />
+                        <VerticalStackLayout
+                            Grid.Column="3"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="60"
+                                Text="&#xE6F8;" />
                             <Label HorizontalOptions="Center" Text="CCB" />
                         </VerticalStackLayout>
                     </Grid>
                 </ui:AcrylicView>
-                
                 <!--  ROW2  -->
-                <ui:AcrylicView   Grid.Row="1" CornerRadius="20"  EffectStyle="ExtraDark"  >
-                    <Grid   Padding="20,10"  ColumnDefinitions="*,*,*,*"   RowDefinitions="*,*"   RowSpacing="15">
+                <ui:AcrylicView
+                    Grid.Row="1"
+                    CornerRadius="20"
+                    EffectStyle="ExtraDark">
+                    <Grid
+                        Padding="20,10"
+                        ColumnDefinitions="*,*,*,*"
+                        RowDefinitions="*,*"
+                        RowSpacing="15">
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label   FontFamily="XF"  FontSize="40"   Text="&#xE62A;"   />
-                            <Label    FontSize="10"   HorizontalOptions="Center"   Text="Theme" />
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE62A;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Theme" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout    Grid.Column="1"   HorizontalOptions="Center"  VerticalOptions="Center">
-                            <Label    FontFamily="XF"    FontSize="40"   Text="&#xE622;"  />
-                            <Label     FontSize="10"   HorizontalOptions="Center"  Text="Message" />
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE622;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Message" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout    Grid.Column="2"   HorizontalOptions="Center"   VerticalOptions="Center">
-                            <Label    FontFamily="XF"   FontSize="40"   Text="&#xE60F;"   />
-                            <Label    FontSize="10"   HorizontalOptions="Center"  Text="Music" />
+                        <VerticalStackLayout
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE60F;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Music" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout  Grid.Column="3"  HorizontalOptions="Center"  VerticalOptions="Center">
-                            <Label   FontFamily="XF"  FontSize="40"  Text="&#xE61D;" />
-                            <Label    FontSize="10"  HorizontalOptions="Center"  Text="Setting" />
-                        </VerticalStackLayout>
-               
-                        <VerticalStackLayout   Grid.Row="1"    HorizontalOptions="Center"   VerticalOptions="Center">
-                            <Label    FontFamily="XF"    FontSize="40"  Text="&#xE68A;"    />
-                            <Label    FontSize="10"  HorizontalOptions="Center"  Text="Mail" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout   Grid.Row="1"   Grid.Column="1"  HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label FontFamily="XF" FontSize="40"  Text="&#xE68D;"   />
-                            <Label   FontSize="10" HorizontalOptions="Center"  Text="Photo" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout  Grid.Row="1"  Grid.Column="2"  HorizontalOptions="Center"  VerticalOptions="Center">
-                            <Label   FontFamily="XF" FontSize="40"  Text="&#xE6A3;" />
-                            <Label   FontSize="10" HorizontalOptions="Center" Text="Phone" />
+                        <VerticalStackLayout
+                            Grid.Column="3"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE61D;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Setting" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout   Grid.Row="1"   Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label    FontFamily="XF" FontSize="40" Text="&#xE731;" />
-                            <Label   FontSize="10"  HorizontalOptions="Center"  Text="Clock" />
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE68A;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Mail" />
                         </VerticalStackLayout>
 
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE68D;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Photo" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE6A3;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Phone" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="XF"
+                                FontSize="40"
+                                Text="&#xE731;" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="Clock" />
+                        </VerticalStackLayout>
                     </Grid>
                 </ui:AcrylicView>
+                <!--  row3  -->
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="15">
+                    <ui:AcrylicView CornerRadius="10" EffectStyle="ExtraLight">
 
-
-                
-                <!--row3-->
-                <Grid   Grid.Row="2"  ColumnDefinitions="*,*,*,*"  ColumnSpacing="15">
-                    <ui:AcrylicView CornerRadius="10" EffectStyle="ExtraLight" >
-                    
-                            <Label    HorizontalOptions="Center"    Text="ExtraLight"    VerticalOptions="Center"  />
-                    
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="ExtraLight"
+                            VerticalTextAlignment="Center" />
                     </ui:AcrylicView>
 
-                    <ui:AcrylicView     Grid.Column="1" CornerRadius="10"  EffectStyle="Light">                       
-                            <Label    HorizontalOptions="Center"     Text="Light"  VerticalOptions="Center"  />                      
+                    <ui:AcrylicView
+                        Grid.Column="1"
+                        CornerRadius="10"
+                        EffectStyle="Light">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="Light"
+                            VerticalTextAlignment="Center" />
                     </ui:AcrylicView>
 
-                    <ui:AcrylicView     Grid.Column="2"  CornerRadius="10"   EffectStyle="Dark">                        
-                            <Label  HorizontalOptions="Center"    Text="Dark"   VerticalOptions="Center" />                        
+                    <ui:AcrylicView
+                        Grid.Column="2"
+                        CornerRadius="10"
+                        EffectStyle="Dark">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="Dark"
+                            VerticalTextAlignment="Center" />
                     </ui:AcrylicView>
 
-                    <ui:AcrylicView    Grid.Column="3"    CornerRadius="10"   EffectStyle="ExtraDark">                        
-                            <Label   HorizontalOptions="Center"   Text="ExtraDark"   VerticalOptions="Center" />                        
+                    <ui:AcrylicView
+                        Grid.Column="3"
+                        CornerRadius="10"
+                        EffectStyle="ExtraDark">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="ExtraDark"
+                            VerticalTextAlignment="Center" />
                     </ui:AcrylicView>
+                </Grid>
+                <!--  Row4  -->
+                <Grid
+                    Grid.Row="3"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="15">
 
+                    <ui:AcrylicView
+                        CornerRadius="40"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="OrangeRed"
+                        TintOpacity=".3"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="1"
+                        CornerRadius="10"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="BlueViolet"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="2"
+                        CornerRadius="10,30,60,60"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="Blue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="3"
+                        CornerRadius="8,50"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="AliceBlue"
+                        TintOpacity=".3"
+                        WidthRequest="80" />
+                </Grid>
+                <!--  Row5  -->
+                <Grid
+                    Grid.Row="4"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="15">
+
+                    <ui:AcrylicView
+                        BorderColor="OrangeRed"
+                        BorderThickness="2"
+                        CornerRadius="60"
+                        EffectStyle="Dark"
+                        HeightRequest="80"
+                        TintColor="OrangeRed"
+                        TintOpacity=".3"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="1"
+                        BorderColor="BlueViolet"
+                        BorderThickness="0,5"
+                        CornerRadius="10"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="BlueViolet"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="2"
+                        BorderColor="Gray"
+                        BorderThickness="0,5,10,3"
+                        CornerRadius="10,30,60,60"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="Blue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
+
+                    <ui:AcrylicView
+                        Grid.Column="3"
+                        BorderColor="HotPink"
+                        BorderThickness="5,0"
+                        CornerRadius="8,50"
+                        EffectStyle="Custom"
+                        HeightRequest="80"
+                        TintColor="AliceBlue"
+                        TintOpacity=".3"
+                        WidthRequest="80" />
                 </Grid>
 
-                <!--Row4-->
-                <Grid  Grid.Row="3"  ColumnDefinitions="*,*,*,*"    ColumnSpacing="15">
+                <!--  Row6  -->
 
-           
-                    <ui:AcrylicView   
-                        CornerRadius="40"     
-                        EffectStyle="Custom"   
-                        HeightRequest="80"  
-                        WidthRequest="80"  
-                        TintColor="OrangeRed"   
-                        TintOpacity=".3"  />
-               
-
+                <Grid Grid.Row="5">
                     <ui:AcrylicView
-                     Grid.Column="1"
-                     CornerRadius="10"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="BlueViolet"
-                     TintOpacity=".2"
-                     WidthRequest="80" />
+                        Padding="0,100,0,0"
+                        CornerRadius="20"
+                        HeightRequest="100">
 
-                    <ui:AcrylicView
-                     Grid.Column="2"
-                     CornerRadius="10,30,60,60"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="Blue"
-                     TintOpacity=".2"
-                     WidthRequest="80" />
-
-                    <ui:AcrylicView
-                     Grid.Column="3"
-                     CornerRadius="8,50"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="AliceBlue"
-                     TintOpacity=".3"
-                     WidthRequest="80" />
-
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="好的风沙很大和23"
+                            VerticalTextAlignment="Center" />
+                    </ui:AcrylicView>
                 </Grid>
 
-
-                <Grid  Grid.Row="4"   ColumnDefinitions="*,*,*,*"    ColumnSpacing="15">
-
-                    <ui:AcrylicView
-                     BorderColor="OrangeRed"
-                     BorderThickness="2"
-                     CornerRadius="60"
-                     EffectStyle="Dark"
-                     HeightRequest="80"
-                     TintColor="OrangeRed"
-                     TintOpacity=".3"
-                     WidthRequest="80" />
-
-                    <ui:AcrylicView
-                     Grid.Column="1"
-                     BorderColor="BlueViolet"
-                     BorderThickness="0,5"
-                     CornerRadius="10"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="BlueViolet"
-                     TintOpacity=".2"
-                     WidthRequest="80" />
-
-                    <ui:AcrylicView
-                     Grid.Column="2"
-                     BorderColor="Gray"
-                     BorderThickness="0,5,10,3"
-                     CornerRadius="10,30,60,60"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="Blue"
-                     TintOpacity=".2"
-                     WidthRequest="80" />
-
-                    <ui:AcrylicView
-                     Grid.Column="3"
-                     BorderColor="HotPink"
-                     BorderThickness="5,0"
-                     CornerRadius="8,50"
-                     EffectStyle="Custom"
-                     HeightRequest="80"
-                     TintColor="AliceBlue"
-                     TintOpacity=".3"
-                     WidthRequest="80" />
-
-                </Grid>
-
-
-                <Grid Grid.Row="5" HeightRequest="800">
-                    
-                </Grid>
+                <Grid Grid.Row="6" HeightRequest="800" />
             </Grid>
         </ScrollView>
     </Grid>
-
-
-
 </ContentPage>

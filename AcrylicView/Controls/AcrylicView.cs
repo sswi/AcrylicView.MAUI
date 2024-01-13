@@ -1,4 +1,5 @@
-﻿using Xe.AcrylicView.Controls;
+﻿using System.Runtime.CompilerServices;
+using Xe.AcrylicView.Controls;
 
 namespace Xe.AcrylicView
 {
@@ -27,8 +28,6 @@ namespace Xe.AcrylicView
             nameof(TintOpacity),
             typeof(double),
             typeof(AcrylicView), 0.0);
-
-
 
         public Color BorderColor
         {
@@ -59,13 +58,16 @@ namespace Xe.AcrylicView
             get => (Color)GetValue(TintColorProperty);
             set => SetValue(TintColorProperty, value);
         }
+
         public double TintOpacity
         {
             get => (double)GetValue(TintOpacityProperty);
             set => SetValue(TintOpacityProperty, value);
         }
 
-
-
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+        }
     }
 }
