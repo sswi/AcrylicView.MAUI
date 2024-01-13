@@ -330,14 +330,11 @@
                 <!--  Row6  -->
 
                 <Grid Grid.Row="5">
-                    <ui:AcrylicView
-                        Padding="0,100,0,0"
-                        CornerRadius="20"
-                        HeightRequest="100">
+                    <ui:AcrylicView CornerRadius="20" HeightRequest="100">
 
                         <Label
                             HorizontalTextAlignment="Center"
-                            Text="好的风沙很大和23"
+                            Text="AcrylicView.MAUI"
                             VerticalTextAlignment="Center" />
                     </ui:AcrylicView>
                 </Grid>

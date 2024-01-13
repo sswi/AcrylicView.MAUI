@@ -28,7 +28,7 @@
 AcrylicView：Acrylic Effect View on the .Net MAUI
 Support Platform：Windows,Android,iOS,Mac
 </Description>
-		<Version>2.1</Version>
+		<Version>2.1.1</Version>
 		<PackageProjectUrl>https://github.com/sswi/AcrylicView.MAUI</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/sswi/AcrylicView.MAUI</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
