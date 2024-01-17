@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net7.0-android;net7.0-ios;net7.0-maccatalyst;</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0;net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<UseMaui>true</UseMaui>
@@ -22,13 +22,11 @@
 		<Authors>xecc</Authors>
 		<Company>xecc</Company>
 		<Copyright>xecc</Copyright>
-		<Description>.Net Maui  平台实现的亚克力效果视图，
-支持：Windows、安卓、苹果
-
-AcrylicView：Acrylic Effect View on the .Net MAUI
+		<Description>AcrylicView：Acrylic Effect View on the .Net MAUI
 Support Platform：Windows,Android,iOS,Mac
-</Description>
-		<Version>2.1.1</Version>
+.Net MAUI 平台实现的亚克力效果视图，
+支持：Windows、安卓、苹果		</Description>
+		<Version>2.1.2</Version>
 		<PackageProjectUrl>https://github.com/sswi/AcrylicView.MAUI</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/sswi/AcrylicView.MAUI</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -38,11 +36,21 @@ Support Platform：Windows,Android,iOS,Mac
 		<PackageId>AcrylicView.Maui</PackageId>
 		<PackageIcon>ico.png</PackageIcon>
 		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes>更改了一些属性默认值</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Tizen\**" />
+	  <Compile Remove="Platforms\Tizen\**" />
+	  <EmbeddedResource Remove="Platforms\Tizen\**" />
+	  <MauiCss Remove="Platforms\Tizen\**" />
+	  <MauiXaml Remove="Platforms\Tizen\**" />
+	  <None Remove="Platforms\Tizen\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="LICENSE.txt" />
@@ -61,10 +69,7 @@ Support Platform：Windows,Android,iOS,Mac
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Platforms\Tizen\" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
 	  <None Include="..\ico.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>

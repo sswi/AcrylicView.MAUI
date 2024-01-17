@@ -402,8 +402,11 @@ namespace Xe.AcrylicView.Platforms.Android
                     i = 0;
                     return true;
                 }
-                _setContentVisibel(false);
                 i++;
+
+                _setContentVisibel(false);
+               
+
                 if (!_weakBlurView.TryGetTarget(out var blurView))
                 {
                     return false;
@@ -458,7 +461,6 @@ namespace Xe.AcrylicView.Platforms.Android
                         blurView.Invalidate();
                     }
                 }
-
                 _setContentVisibel(true);
                 return true;
             }

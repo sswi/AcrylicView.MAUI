@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml.Media;
 using Border = Microsoft.UI.Xaml.Controls.Border;
@@ -12,7 +11,7 @@ namespace Xe.AcrylicView.Controls
     {
         private AcrylicBrush _acrylicBrush;
         private Border _border;
-        private Grid _contentGrid = new();
+        private readonly Grid _contentGrid = new();
         protected override Grid CreatePlatformView()
         {
             _acrylicBrush = new AcrylicBrush();
@@ -119,7 +118,7 @@ namespace Xe.AcrylicView.Controls
             {
                 case EffectStyle.Dark:
                     handler._acrylicBrush.TintColor = Colors.Black.ToWindowsColor();
-                    handler._acrylicBrush.TintOpacity = 0.3;
+                    handler._acrylicBrush.TintOpacity = 0.35;
                     break;
 
                 case EffectStyle.ExtraDark:
@@ -128,13 +127,13 @@ namespace Xe.AcrylicView.Controls
                     break;
 
                 case EffectStyle.Light:
-                    handler._acrylicBrush.TintColor = Colors.Transparent.ToWindowsColor();
-                    handler._acrylicBrush.TintOpacity = 0.0;
+                    handler._acrylicBrush.TintColor = Colors.White.ToWindowsColor();
+                    handler._acrylicBrush.TintOpacity = 0.05;
                     break;
 
                 case EffectStyle.ExtraLight:
                     handler._acrylicBrush.TintColor = Colors.White.ToWindowsColor();
-                    handler._acrylicBrush.TintOpacity = 0.3;
+                    handler._acrylicBrush.TintOpacity = 0.35;
                     break;
             }
         }

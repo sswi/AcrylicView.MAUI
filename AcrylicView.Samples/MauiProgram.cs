@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿
+using Microsoft.Extensions.Logging;
 using Xe.AcrylicView;
 
 namespace AcrylicView.Samples

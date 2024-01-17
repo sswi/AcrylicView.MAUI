@@ -65,9 +65,9 @@ namespace Xe.AcrylicView
             set => SetValue(TintOpacityProperty, value);
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            base.OnPropertyChanged(propertyName);
-        }
+        //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        //{
+        //    base.OnPropertyChanged(propertyName);
+        //}
     }
 }

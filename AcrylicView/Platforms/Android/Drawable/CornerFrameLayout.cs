@@ -20,8 +20,8 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
 
 
 
-        private Path mPath = new Path();
-        private float[] mRadii = new float[8];
+        private readonly Path mPath = new Path();
+        private readonly float[] mRadii = new float[8];
 
         protected override void OnDraw(Canvas canvas)
         {

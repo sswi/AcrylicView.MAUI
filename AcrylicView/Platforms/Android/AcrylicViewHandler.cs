@@ -167,8 +167,7 @@ namespace Xe.AcrylicView.Controls
         {
             if ((view.TintColor == null || view.TintColor == Colors.Transparent) && view.EffectStyle == EffectStyle.Custom)
             {
-                colorBlendLayer.SetBackgroundDrawable(null);
-                return;
+                colorBlendLayer.SetBackgroundDrawable(null);                
             }
             else
             {

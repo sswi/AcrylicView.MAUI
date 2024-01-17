@@ -5,7 +5,7 @@ using Element = Android.Renderscripts.Element;
 
 namespace Xe.AcrylicView.Platforms.Android
 {
-    [Obsolete("此类库 在Android12及以上已过时")]
+
     public class AndroidStockBlurImpl : IBlurImpl
     {
 
