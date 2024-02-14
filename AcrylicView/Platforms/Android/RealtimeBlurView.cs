@@ -210,7 +210,7 @@ namespace Xe.AcrylicView.Platforms.Android
                     if (mDifferentRoot)
                         mDecorView.PostInvalidate();
                 },
-                    8  //AndroidMaterialFrameRenderer.BlurProcessingDelayMilliseconds 模糊处理延迟毫秒
+                    8 //AndroidMaterialFrameRenderer.BlurProcessingDelayMilliseconds 模糊处理延迟毫秒
                  );
             }
             else
@@ -254,7 +254,7 @@ namespace Xe.AcrylicView.Platforms.Android
                      if (mDecorView == null || !_autoUpdate) return;
                      SubscribeToPreDraw(mDecorView);
                  },
-                80   //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds 模糊自动更新延迟（毫秒）
+                80  //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds 模糊自动更新延迟（毫秒）
                 );
         }
 
@@ -405,7 +405,6 @@ namespace Xe.AcrylicView.Platforms.Android
                 i++;
 
                 _setContentVisibel(false);
-               
 
                 if (!_weakBlurView.TryGetTarget(out var blurView))
                 {
@@ -431,8 +430,11 @@ namespace Xe.AcrylicView.Platforms.Android
                     blurView.GetLocationOnScreen(locations);
 
                     //计算边框宽高，避免截图时候把边框也算进去造成边缘有虚化颜色
-                    float x = _borderThickness.Left > 0 ? (float)(locations[0] + _borderThickness.Left * _density) : locations[0];
-                    float y = _borderThickness.Top > 0 ? (float)(locations[1] + _borderThickness.Top * _density) : locations[1];
+                    //float x = _borderThickness.Left > 0 ? (float)(locations[0] + _borderThickness.Left * _density) : locations[0];
+                    //float y = _borderThickness.Top > 0 ? (float)(locations[1] + _borderThickness.Top * _density) : locations[1];
+
+                    float x = locations[0];
+                    float y = locations[1];
 
                     // just erase transparent
                     blurView.mBitmapToBlur.EraseColor(Color.Transparent);

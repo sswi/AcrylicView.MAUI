@@ -90,7 +90,6 @@
                                 Style="{StaticResource TitleStyle}"
                                 Text="CCB" />
                         </StackLayout>
-
                     </Grid>
                 </ui:AcrylicView>
 
@@ -134,7 +133,6 @@
                                 Text="Seeting" />
                         </StackLayout>
 
-
                         <StackLayout Grid.Row="1" HorizontalOptions="Center">
                             <Label Style="{StaticResource IconStyle2}" Text="&#xE68A;" />
                             <Label
@@ -172,8 +170,6 @@
                                 Style="{StaticResource Title2Style}"
                                 Text="Clock" />
                         </StackLayout>
-
-
                     </Grid>
                 </ui:AcrylicView>
 
@@ -205,7 +201,6 @@
                         </Grid>
                     </ui:AcrylicView>
                 </Grid>
-
 
                 <!--  Row4  -->
                 <Grid
@@ -288,9 +283,7 @@
                         TintOpacity=".2"
                         WidthRequest="80" />
                 </Grid>
-
             </Grid>
         </ScrollView>
-
     </Grid>
 </ContentPage>
