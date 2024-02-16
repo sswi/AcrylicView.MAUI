@@ -393,17 +393,19 @@ namespace Xe.AcrylicView.Platforms.Android
                 OnPreDraw();
             }
 
-            private int i = 0;
+            //渲染次数
+            private int renderCount = 0;
 
             public bool OnPreDraw()
             {
-                if (i == 2)
+                //隔帧截图渲染
+                if (renderCount == 2)
                 {
-                    i = 0;
+                    renderCount = 0;
                     return true;
                 }
-                i++;
-
+                renderCount++;
+                //截图前将图层顶部视图透明，使其不可见
                 _setContentVisibel(false);
 
                 if (!_weakBlurView.TryGetTarget(out var blurView))
@@ -428,10 +430,6 @@ namespace Xe.AcrylicView.Platforms.Android
                     //获取view所在的左上角位置
                     decor.GetLocationOnScreen(locations);
                     blurView.GetLocationOnScreen(locations);
-
-                    //计算边框宽高，避免截图时候把边框也算进去造成边缘有虚化颜色
-                    //float x = _borderThickness.Left > 0 ? (float)(locations[0] + _borderThickness.Left * _density) : locations[0];
-                    //float y = _borderThickness.Top > 0 ? (float)(locations[1] + _borderThickness.Top * _density) : locations[1];
 
                     float x = locations[0];
                     float y = locations[1];
@@ -463,7 +461,9 @@ namespace Xe.AcrylicView.Platforms.Android
                         blurView.Invalidate();
                     }
                 }
+                //截图前将图层顶部视图不透明，使其可见
                 _setContentVisibel(true);
+
                 return true;
             }
         }

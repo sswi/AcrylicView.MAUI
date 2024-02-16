@@ -1,12 +1,7 @@
 ﻿using CoreAnimation;
 using CoreGraphics;
 using Microsoft.Maui.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using UIKit;
 
 namespace Xe.AcrylicView.Platforms.MacCatalyst
@@ -23,10 +18,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
 
         public CGColor BorderColor
         {
-            get
-            {
-                return borderColor;
-            }
+            get => borderColor;
             set
             {
                 borderColor = value;
@@ -36,10 +28,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
 
         public Thickness BorderThickness
         {
-            get
-            {
-                return borderThickness;
-            }
+            get => borderThickness;
             set
             {
                 borderThickness = value;
@@ -49,10 +38,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
 
         public Thickness CornerRadius
         {
-            get
-            {
-                return cornerRadius;
-            }
+            get => cornerRadius;
             set
             {
                 cornerRadius = value;
@@ -74,10 +60,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
 
         public override CGRect Frame
         {
-            get
-            {
-                return base.Frame;
-            }
+            get => base.Frame;
             set
             {
                 base.Frame = value;
@@ -85,7 +68,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
             }
         }
 
-        private NFloat CapRadius(double a, double b, double c)
+        private static NFloat CapRadius(double a, double b, double c)
         {
             if (a <= 0)
             {
@@ -117,9 +100,6 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
             SetupBorderLayer();
         }
 
-
-
-
         public override bool PointInside(CGPoint point, UIEvent uievent)
         {
             UIView[] subviews = Subviews;
@@ -136,7 +116,6 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
 
         private void SetupBorderLayer()
         {
-
             if (Frame.IsEmpty)
             {
                 return;
@@ -191,7 +170,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
             cGPath.AddArcToPoint(nFloat, nFloat1, nFloat + nFloat8, nFloat1, nFloat8);
             cGPath.CloseSubpath();
             layer.Mask = new CAShapeLayer
-            {             
+            {
                 Path = cGPath
             };
             if (num9 > 0 || num6 > 0 || num7 > 0 || num8 > 0)
@@ -236,7 +215,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
                     NFloat nFloat13 = (NFloat)Math.Max(0, nFloat11 - num8);
                     NFloat nFloat14 = (NFloat)Math.Max(nFloat12, nFloat13);
                     CGAffineTransform cGAffineTransform2 = new((nFloat14 > 0 ? nFloat12 / nFloat14 : nFloat14), 0, 0, (nFloat14 > 0 ? nFloat13 / nFloat14 : nFloat14), (NFloat)(nFloat + num9 + nFloat12), (NFloat)(nFloat3 - num8 - nFloat13));
-                    cGPath1.AddArc(cGAffineTransform2, 0, 0, nFloat14, (NFloat)3.14159265358979 / 2, (NFloat)3.14159265358979, false);
+                    cGPath1.AddArc(cGAffineTransform2, 0, 0, nFloat14, NFloat.Pi / 2, NFloat.Pi, false);
                 }
                 else
                 {
@@ -248,7 +227,7 @@ namespace Xe.AcrylicView.Platforms.MacCatalyst
                     NFloat nFloat16 = (NFloat)Math.Max(0, nFloat8 - num6);
                     NFloat nFloat17 = (NFloat)Math.Max(nFloat15, nFloat16);
                     CGAffineTransform cGAffineTransform3 = new((nFloat17 > 0 ? nFloat15 / nFloat17 : nFloat17), 0, 0, (nFloat17 > 0 ? nFloat16 / nFloat17 : nFloat17), (NFloat)(nFloat + num9 + nFloat15), (NFloat)(nFloat1 + num6 + nFloat16));
-                    cGPath1.AddArc(cGAffineTransform3, 0, 0, nFloat17, (NFloat)3.14159265358979, ((NFloat)3.14159265358979 * 3) / 2, false);
+                    cGPath1.AddArc(cGAffineTransform3, 0, 0, nFloat17, NFloat.Pi, NFloat.Pi * 3 / 2, false);
                 }
                 else
                 {

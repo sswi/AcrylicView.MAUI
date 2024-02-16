@@ -9,12 +9,11 @@ namespace Xe.AcrylicView.Controls
 {
     public partial class AcrylicViewHandler : ViewHandler<IAcrylicView, Grid>
     {
-        private AcrylicBrush _acrylicBrush;
+        private readonly AcrylicBrush _acrylicBrush = new();
         private Border _border;
         private readonly Grid _contentGrid = new();
         protected override Grid CreatePlatformView()
         {
-            _acrylicBrush = new AcrylicBrush();
             _border = new Border()
             {
                 Background = _acrylicBrush,
@@ -60,15 +59,17 @@ namespace Xe.AcrylicView.Controls
 
         private static void MapCornerRadius(AcrylicViewHandler handler, IAcrylicView view)
         {
-            var nativView = handler?.PlatformView;
-            if (nativView == null) return;
-
+            if (handler == null) return;
             handler._border.CornerRadius = new Microsoft.UI.Xaml.CornerRadius(view.CornerRadius.Left, view.CornerRadius.Top, view.CornerRadius.Right, view.CornerRadius.Bottom);
 
-            //2024.1.14 nativView.CornerRadius = new Microsoft.UI.Xaml.CornerRadius(view.CornerRadius.Left, view.CornerRadius.Top, view.CornerRadius.Right, view.CornerRadius.Bottom);
+            //2024.2.16
+            //var nativView = handler?.PlatformView;
+            //if (nativView == null) return;
+            //nativView.CornerRadius = new Microsoft.UI.Xaml.CornerRadius(view.CornerRadius.Left, view.CornerRadius.Top, view.CornerRadius.Right, view.CornerRadius.Bottom);
         }
         private static void MapPadding(AcrylicViewHandler handler, IAcrylicView view)
         {
+            if (handler == null) return;
             handler._contentGrid.Padding = new Thickness(view.Padding.Left, view.Padding.Top, view.Padding.Right, view.Padding.Bottom);
         }
 
@@ -97,6 +98,7 @@ namespace Xe.AcrylicView.Controls
         }
         private static void MapBorderColor(AcrylicViewHandler handler, IAcrylicView view)
         {
+            if (handler == null) return;
             handler._border.BorderBrush = view.BorderColor.ToPlatform();
 
             //2024.1.14
@@ -107,6 +109,7 @@ namespace Xe.AcrylicView.Controls
 
         private static void MapEffectStyle(AcrylicViewHandler handler, IAcrylicView view)
         {
+            if (handler == null) return;
             if (view.EffectStyle == EffectStyle.Custom)
             {
                 MapTintColor(handler, view);

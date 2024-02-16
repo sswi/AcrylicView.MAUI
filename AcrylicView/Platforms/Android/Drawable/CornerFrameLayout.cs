@@ -11,16 +11,15 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
     {
         public CornerFrameLayout(Context context, IAttributeSet attrs) : base(context, attrs)
         {
-            this.SetClipChildren(true);
+            SetClipChildren(true);
         }
+
         public CornerFrameLayout(Context context) : base(context)
         {
-            this.SetClipChildren(true);
+            SetClipChildren(true);
         }
 
-
-
-        private readonly Path mPath = new Path();
+        private readonly Path mPath = new();
         private readonly float[] mRadii = new float[8];
 
         protected override void OnDraw(Canvas canvas)
@@ -37,8 +36,8 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             mPath.AddRoundRect(new RectF(0, 0, w, h), mRadii, Path.Direction.Cw);
         }
 
-
         /// <summary>
+        /// 设置四个圆角,重载1
         ///  set each corner radius.
         /// </summary>
         /// <param name="topLeft"></param>
@@ -61,11 +60,8 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             Invalidate();
         }
 
-
-
-
         /// <summary>
-        /// 设置四个圆角
+        /// 设置四个圆角,重载2
         /// Set each corner radius.
         /// </summary>
         public void SetRadius(float topLeftX, float topLeftY, float topRightX, float topRightY, float bottomRightX, float bottomRightY, float bottomLeftX, float bottomLeftY)

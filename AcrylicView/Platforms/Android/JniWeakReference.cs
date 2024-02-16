@@ -1,15 +1,8 @@
-﻿
-
-namespace Xe.AcrylicView.Platforms.Android
+﻿namespace Xe.AcrylicView.Platforms.Android
 {
-    internal class JniWeakReference<T> where T : Java.Lang.Object
+    internal class JniWeakReference<T>(T target) where T : Java.Lang.Object
     {
-        private readonly WeakReference<T> _reference;
-
-        public JniWeakReference(T target)
-        {
-            _reference = new WeakReference<T>(target);
-        }
+        private readonly WeakReference<T> _reference = new(target);
 
         public bool TryGetTarget(out T target)
         {

@@ -20,7 +20,7 @@ namespace Xe.AcrylicView.Controls
                 CrossPlatformArrange = new Func<Rect, Size>(VirtualView.CrossPlatformArrange)
             };
 
-            colorBlendUIView = new UIView();
+            colorBlendUIView = [];
 
             acrylicEffectView = new UIVisualEffectView()
             {
@@ -34,14 +34,14 @@ namespace Xe.AcrylicView.Controls
 
         static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
         {
-            var nativView = handler?.PlatformView;
-            handler.colorBlendUIView.BackgroundColor = view.TintColor.ToPlatform();
+            if (handler != null)
+                handler.colorBlendUIView.BackgroundColor = view.TintColor.ToPlatform();
         }
 
         static void MapTintOpacity(AcrylicViewHandler handler, IAcrylicView view)
         {
-            var nativView = handler?.PlatformView;
-            handler.colorBlendUIView.Alpha = (float)view.TintOpacity;
+            if (handler != null)
+                handler.colorBlendUIView.Alpha = (float)view.TintOpacity;
         }
         static void MapBorderColor(AcrylicViewHandler handler, IAcrylicView view)
         {
@@ -94,11 +94,10 @@ namespace Xe.AcrylicView.Controls
             if (handler == null)
                 return;
 
-            var ver = UIDevice.CurrentDevice.SystemVersion;
+            //var osVersion = UIDevice.CurrentDevice.SystemVersion;
 
             //if (!float.TryParse(ver, out float version))
             //    return;
-
 
             var style = view.EffectStyle switch
             {

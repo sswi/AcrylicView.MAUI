@@ -2,9 +2,6 @@
 {
     public partial class AcrylicViewHandler
     {
-
-       
-
         private static readonly PropertyMapper<IAcrylicView, AcrylicViewHandler> propertyMapper = new(ViewMapper)
         {
             [nameof(IAcrylicView.CornerRadius)] = MapCornerRadius,
@@ -18,7 +15,6 @@
             [nameof(IAcrylicView.Padding)] = MapPadding,
 #endif
         };
-       
 
         public AcrylicViewHandler() : base(propertyMapper)
         {

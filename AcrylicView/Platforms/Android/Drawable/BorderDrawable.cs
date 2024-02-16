@@ -123,8 +123,8 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// </summary>
         private float[] GetBorderOuterRadii()
         {
-            return new float[]
-            {
+            return
+            [
                 borderTopLeftRadius,
                 borderTopLeftRadius,
                 borderTopRightRadius,
@@ -133,7 +133,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
                 borderBottomRightRadius,
                 borderBottomLeftRadius,
                 borderBottomLeftRadius
-            };
+            ];
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// </summary>
         private float[] GetBorderInnerRadii()
         {
-            return new float[]
-            {
+            return
+            [
                 Math.Max(0f, borderTopLeftRadius - borderLeftWidth),
                 Math.Max(0f, borderTopLeftRadius - borderTopWidth),
                 Math.Max(0f, borderTopRightRadius - borderRightWidth),
@@ -159,7 +159,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
                 Math.Max(0f, borderBottomRightRadius - borderBottomWidth),
                 Math.Max(0f, borderBottomLeftRadius -borderLeftWidth),
                 Math.Max(0f, borderBottomLeftRadius - borderBottomWidth)
-            };
+            ];
         }
 
         private Color borderColor;

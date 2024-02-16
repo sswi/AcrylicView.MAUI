@@ -12,10 +12,6 @@
         EffectStyle EffectStyle { get; set; }
 
         Thickness BorderThickness { get; set; }
-
-
-
-
     }
 
     public enum EffectStyle

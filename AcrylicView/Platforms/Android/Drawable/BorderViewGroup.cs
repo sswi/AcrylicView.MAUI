@@ -6,17 +6,10 @@ using Microsoft.Maui.Platform;
 using Rect = Microsoft.Maui.Graphics.Rect;
 using View = Android.Views.View;
 
-
 namespace Xe.AcrylicView.Platforms.Android.Drawable
 {
-    public class BorderViewGroup : FrameLayout
+    public class BorderViewGroup(Context context) : FrameLayout(context)
     {
-
-        public BorderViewGroup(Context context) : base(context)
-        {
-
-        }
-
         /// <summary>
         /// 跨平台测量
         /// </summary>
@@ -27,19 +20,16 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// </summary>
         internal Func<Rect, Size> CrossPlatformArrange { get; set; }
 
-
         public BorderDrawable BorderDrawable
         {
-            get
-            {
-                return borderDrawable;
-            }
+            get => borderDrawable;
+
             set
             {
                 if (borderDrawable != value)
                 {
-                    borderDrawable = value;                    
-                    Background = borderDrawable;                  
+                    borderDrawable = value;
+                    Background = borderDrawable;
                 }
             }
         }
@@ -88,7 +78,6 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             SetMeasuredDimension((int)num3, (int)num4);
         }
 
-
         protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
         {
             double num = ContextExtensions.FromPixels(Context, left);
@@ -101,7 +90,6 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             Rect rect = new(0, 0, num5, num6);
             CrossPlatformArrange(rect);
         }
-
 
         /// <summary>
         /// 获取默认尺寸
@@ -123,9 +111,5 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         /// 底色 圆角 画板
         /// </summary>
         private BorderDrawable borderDrawable;
-
-
-
-
     }
 }
