@@ -254,7 +254,7 @@ namespace Xe.AcrylicView.Platforms.Android
                      if (mDecorView == null || !_autoUpdate) return;
                      SubscribeToPreDraw(mDecorView);
                  },
-                80  //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds 模糊自动更新延迟（毫秒）
+                50  //AndroidMaterialFrameRenderer.BlurAutoUpdateDelayMilliseconds 模糊自动更新延迟（毫秒）
                 );
         }
 
@@ -398,7 +398,11 @@ namespace Xe.AcrylicView.Platforms.Android
 
             public bool OnPreDraw()
             {
-                //隔帧截图渲染
+                #region 隔帧对View截图
+
+                //隔帧截图渲染，也就表示在安卓中的帧数减半，为了AcrylicView层截图时不受AcrylicView.Content层的影响，
+                //故在截图前使其AcrylicView.Content透明，后再进行截图
+                //故造成影响是 帧数减半
                 if (renderCount == 2)
                 {
                     renderCount = 0;
@@ -406,6 +410,9 @@ namespace Xe.AcrylicView.Platforms.Android
                 }
                 renderCount++;
                 //截图前将图层顶部视图透明，使其不可见
+
+                #endregion 隔帧对View截图
+
                 _setContentVisibel(false);
 
                 if (!_weakBlurView.TryGetTarget(out var blurView))

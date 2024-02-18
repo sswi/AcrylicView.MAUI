@@ -7,6 +7,10 @@
 | :heavy_check_mark: Windows |
 
 
+温馨提示：在 windows的安卓子系统 中无法正常显示  
+Tips：Does not work in the Windows subsystem for Android   
+
+
 NugetPackage：AcrylicView.Maui
 
 ![231667033-e99ed65b-d74a-4e70-9e89-0958afdc5e45](https://github.com/sswi/AcrylicView.MAUI/blob/master/ico.png)
@@ -24,8 +28,7 @@ using Xe.AcrylicView;
             builder
                 .UseMauiApp<App>()
                 
-                .UseAcrylicView()  //*********  usage
-                
+                .UseAcrylicView()  //*********  usage                
                 
                 .ConfigureFonts(fonts =>
                 {
