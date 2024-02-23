@@ -14,7 +14,6 @@ Tips：Does not work in the Windows subsystem for Android
 NugetPackage：AcrylicView.Maui
 
 ![231667033-e99ed65b-d74a-4e70-9e89-0958afdc5e45](https://github.com/sswi/AcrylicView.MAUI/assets/39110708/1e05f06c-7d43-403a-8f83-74d9436c44f3)
-
 MauiProgram.cs
 
 ```csharp
