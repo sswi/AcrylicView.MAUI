@@ -33,7 +33,7 @@ namespace Xe.AcrylicView.Platforms.Android
 
         private bool mIsRendering;
 
-        private readonly Paint mPaint;
+        private readonly Paint mPaint = new();
 
         // mDecorView should be the root view of the activity (even if you are on a different window like a dialog)
         // private View mDecorView;
@@ -43,33 +43,28 @@ namespace Xe.AcrylicView.Platforms.Android
         // we need to manually call invalidate() in onPreDraw(), otherwise we will not be able to see the changes
         private bool mDifferentRoot;
 
-        private bool _isContainerShown;
+        private bool _isContainerShown = true;
 
-        private bool _autoUpdate;
+        private bool _autoUpdate = true;
 
         private static int RENDERING_COUNT;
 
         private static int BLUR_IMPL;
         private Thickness borderThickness = new();
 
-        public delegate void SetContentVisibel(bool visible);
-
-        private readonly SetContentVisibel _contentSetVisibel;
+        /// <summary>
+        /// 更改内容不透明度
+        /// 用于截图前隐藏，截图后内容恢复显示
+        /// </summary>
+        public Action<bool> SetContentVisible;
 
         [Obsolete("此类库 在>=Android12 已经不再使用，谷歌已经更新了一套新的模糊操作类库")]
-        public RealtimeBlurView(Context context, SetContentVisibel visibel, string formsId = null) : base(context)
+        public RealtimeBlurView(Context context, Action<bool> visibleAction, string formsId = null) : base(context)
         {
             // provide your own by override getBlurImpl()
             mBlurImpl = GetBlurImpl();
-
-            mPaint = new Paint();
-
-            // _formsId = formsId;
-            _isContainerShown = true;
-            _autoUpdate = true;
-
             preDrawListener = new PreDrawListener(this);
-            _contentSetVisibel = visibel;
+            SetContentVisible = visibleAction;
         }
 
         public RealtimeBlurView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
@@ -83,7 +78,7 @@ namespace Xe.AcrylicView.Platforms.Android
         public void SetBorderThickness(Thickness borderThickness)
         {
             this.borderThickness = borderThickness;
-            preDrawListener.OnPreDraw(borderThickness, _contentSetVisibel);
+            preDrawListener.OnPreDraw(borderThickness, SetContentVisible);
         }
 
         protected IBlurImpl GetBlurImpl()
@@ -235,10 +230,11 @@ namespace Xe.AcrylicView.Platforms.Android
             if (autoUpdate)
             {
                 EnableAutoUpdate();
-                return;
             }
-
-            DisableAutoUpdate();
+            else
+            {
+                DisableAutoUpdate();
+            }
         }
 
         private void EnableAutoUpdate()
@@ -384,12 +380,12 @@ namespace Xe.AcrylicView.Platforms.Android
             /// <summary>
             /// 控制顶层视图透明度
             /// </summary>
-            private SetContentVisibel _setContentVisibel;
+            private Action<bool> SetContentVisible;
 
-            public void OnPreDraw(Thickness thickness, SetContentVisibel setContentvisibel)
+            public void OnPreDraw(Thickness thickness, Action<bool> contentvisibleAction)
             {
                 _borderThickness = thickness;
-                _setContentVisibel = setContentvisibel;
+                SetContentVisible = contentvisibleAction;
                 OnPreDraw();
             }
 
@@ -413,7 +409,7 @@ namespace Xe.AcrylicView.Platforms.Android
 
                 #endregion 隔帧对View截图
 
-                _setContentVisibel(false);
+                SetContentVisible(false);
 
                 if (!_weakBlurView.TryGetTarget(out var blurView))
                 {
@@ -438,8 +434,8 @@ namespace Xe.AcrylicView.Platforms.Android
                     decor.GetLocationOnScreen(locations);
                     blurView.GetLocationOnScreen(locations);
 
-                    float x = locations[0];
-                    float y = locations[1];
+                    //float x = locations[0];
+                    //float y = locations[1];
 
                     // just erase transparent
                     blurView.mBitmapToBlur.EraseColor(Color.Transparent);
@@ -451,7 +447,7 @@ namespace Xe.AcrylicView.Platforms.Android
                         float _borderWidth = (float)(_density * (_borderThickness.Left + _borderThickness.Right));
                         float _borderHeight = (float)(_density * (_borderThickness.Top + _borderThickness.Bottom));
                         blurView.mBlurringCanvas.Scale((blurView.mBitmapToBlur.Width + _borderWidth) / blurView.Width, (blurView.mBitmapToBlur.Height + _borderHeight) / blurView.Height);
-                        blurView.mBlurringCanvas.Translate(-x, -y);
+                        blurView.mBlurringCanvas.Translate(-locations[0], -locations[1]);
                         decor.Background?.Draw(blurView.mBlurringCanvas);
                         decor.Draw(blurView.mBlurringCanvas);
                     }
@@ -469,7 +465,7 @@ namespace Xe.AcrylicView.Platforms.Android
                     }
                 }
                 //截图前将图层顶部视图不透明，使其可见
-                _setContentVisibel(true);
+                SetContentVisible(true);
 
                 return true;
             }
@@ -570,7 +566,7 @@ namespace Xe.AcrylicView.Platforms.Android
         {
             base.OnSizeChanged(w, h, oldw, oldh);
             if (w > 0 && h > 0)
-                preDrawListener.OnPreDraw(borderThickness, _contentSetVisibel);
+                preDrawListener.OnPreDraw(borderThickness, SetContentVisible);
         }
     }
 }

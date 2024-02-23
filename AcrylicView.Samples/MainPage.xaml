@@ -55,9 +55,9 @@
                 <!--  Row 1  -->
                 <ui:AcrylicView
                                 BorderColor="WhiteSmoke"
-                                BorderThickness="2"
+                                BorderThickness="1"
                                 CornerRadius="20">
-                    <Grid BackgroundColor="Aqua"
+                    <Grid
                           ColumnDefinitions="*,*,*,*"
                           VerticalOptions="Center">
                         <StackLayout HorizontalOptions="Center">

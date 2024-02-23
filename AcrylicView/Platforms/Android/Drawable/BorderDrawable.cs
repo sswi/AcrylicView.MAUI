@@ -15,16 +15,14 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         public BorderDrawable(Context context, IAcrylicView border)
         {
             //将背景色转换成 本机颜色
-            var nativeColor = GetNativeColor(PaintExtensions.ToColor(border.Background), Color.Transparent);
-            //将边框色转换为本机颜色
-            var nativeColor2 = GetNativeColor(border.BorderColor, Color.Transparent);
+            var nativeColor = GetNativeColor(border.Background.ToColor(), Color.Transparent);
             //初始化
-            Initialize(context, nativeColor2, nativeColor, border.BorderThickness, border.CornerRadius);
+            Initialize(context, border.BorderColor.ToPlatform(), nativeColor, border.BorderThickness, border.CornerRadius);
         }
 
         public BorderDrawable(Context context, Thickness cornerRadius, Color color)
         {
-            Initialize(context, Colors.Transparent.ToPlatform(), color, new Thickness(0), cornerRadius);
+            Initialize(context, Color.Transparent, color, new Thickness(0), cornerRadius);
         }
 
         /// <summary>
@@ -40,13 +38,14 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             //绘制背景色
             if (backgroundColor != 0)
             {
-                var paint = new Paint(); //油漆笔
+                //画笔
+                var paint = new Paint
+                {
+                    Color = backgroundColor,  //填充颜色
+                    AntiAlias = true //抗锯齿
+                };
 
                 paint.SetStyle(Paint.Style.Fill);  //填充
-
-                paint.Color = backgroundColor;  //填充颜色
-
-                paint.AntiAlias = true; //抗锯齿
 
                 //绘制圆角
                 var path = new Path();
@@ -55,12 +54,19 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             }
             if (borderThickness.Left > 0.0 || borderThickness.Top > 0.0 || borderThickness.Right > 0.0 || borderThickness.Bottom > 0.0)
             {
-                var paint2 = new Paint() { Color = borderColor };
+                var paint2 = new Paint()
+                {
+                    Color = borderColor,
+                    AntiAlias = true
+                };
                 paint2.SetStyle(Paint.Style.Fill);
-                paint2.AntiAlias = true;
+
                 var path2 = new Path();
+                //外矩形
                 path2.AddRoundRect(GetBorderOuterRect(), GetBorderOuterRadii(), Path.Direction.Cw);
+                //内矩形
                 path2.AddRoundRect(GetBorderInnerRect(), GetBorderInnerRadii(), Path.Direction.Ccw);
+                //绘制先切部分，则为边框
                 canvas.DrawPath(path2, paint2);
             }
         }
@@ -77,7 +83,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             {
                 return nativeDefaultColor;
             }
-            return ColorExtensions.ToPlatform(mauiColor);
+            return mauiColor.ToPlatform();
         }
 
         /// <summary>
@@ -99,19 +105,18 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
             this.borderColor = borderColor;
             this.backgroundColor = backgroundColor;
             this.borderThickness = borderThickness;
-            this.cornerRadius = cornerRadius;
-            borderTopLeftRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Left);
-            borderTopRightRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Top);
-            borderBottomRightRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Right);
-            borderBottomLeftRadius = ContextExtensions.ToPixels(context, this.cornerRadius.Bottom);
-            borderLeftWidth = ContextExtensions.ToPixels(context, this.borderThickness.Left);
-            borderTopWidth = ContextExtensions.ToPixels(context, this.borderThickness.Top);
-            borderRightWidth = ContextExtensions.ToPixels(context, this.borderThickness.Right);
-            borderBottomWidth = ContextExtensions.ToPixels(context, this.borderThickness.Bottom);
+            borderTopLeftRadius = context.ToPixels(cornerRadius.Left);
+            borderTopRightRadius = context.ToPixels(cornerRadius.Top);
+            borderBottomRightRadius = context.ToPixels(cornerRadius.Right);
+            borderBottomLeftRadius = context.ToPixels(cornerRadius.Bottom);
+            borderLeftWidth = context.ToPixels(borderThickness.Left);
+            borderTopWidth = context.ToPixels(borderThickness.Top);
+            borderRightWidth = context.ToPixels(borderThickness.Right);
+            borderBottomWidth = context.ToPixels(borderThickness.Bottom);
         }
 
         /// <summary>
-        /// 获取边框外矩形
+        /// 获取边框外矩形区域
         /// </summary>
         private RectF GetBorderOuterRect()
         {
@@ -137,7 +142,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         }
 
         /// <summary>
-        /// 获取边框线条
+        /// 获取边框内矩形区域
         /// </summary>
         private RectF GetBorderInnerRect()
         {
@@ -145,7 +150,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         }
 
         /// <summary>
-        /// 获取边框内半径
+        /// 获取边框四园角内半径
         /// </summary>
         private float[] GetBorderInnerRadii()
         {
@@ -154,7 +159,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
                 Math.Max(0f, borderTopLeftRadius - borderLeftWidth),
                 Math.Max(0f, borderTopLeftRadius - borderTopWidth),
                 Math.Max(0f, borderTopRightRadius - borderRightWidth),
-                Math.Max(0f,borderTopRightRadius - borderTopWidth),
+                Math.Max(0f, borderTopRightRadius - borderTopWidth),
                 Math.Max(0f, borderBottomRightRadius - borderRightWidth),
                 Math.Max(0f, borderBottomRightRadius - borderBottomWidth),
                 Math.Max(0f, borderBottomLeftRadius -borderLeftWidth),
@@ -167,8 +172,6 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
         private Color backgroundColor;
 
         private Thickness borderThickness;
-
-        private Thickness cornerRadius;
 
         private float borderTopLeftRadius;
 

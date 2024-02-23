@@ -82,7 +82,7 @@ namespace Xe.AcrylicView.Controls
             //加入Maui视图
             if (view.PresentedContent is IView content && view.Handler != null)
             {
-                var frameworkElement = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
+                var frameworkElement = content.ToPlatform(view.Handler.MauiContext);
                 nativView.AddSubview(frameworkElement);
             }
         }
@@ -94,7 +94,7 @@ namespace Xe.AcrylicView.Controls
             if (handler == null)
                 return;
 
-            //var osVersion = UIDevice.CurrentDevice.SystemVersion;
+            // var osVersion = UIDevice.CurrentDevice.SystemVersion;
 
             //if (!float.TryParse(ver, out float version))
             //    return;

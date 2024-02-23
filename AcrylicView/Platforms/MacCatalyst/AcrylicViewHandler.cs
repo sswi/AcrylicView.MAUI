@@ -20,7 +20,7 @@ namespace Xe.AcrylicView.Controls
                 CrossPlatformArrange = new Func<Rect, Size>(VirtualView.CrossPlatformArrange)
             };
 
-            colorBlendUIView = new UIView();
+            colorBlendUIView = [];
 
             acrylicEffectView = new UIVisualEffectView()
             {
@@ -34,13 +34,13 @@ namespace Xe.AcrylicView.Controls
 
         static void MapTintColor(AcrylicViewHandler handler, IAcrylicView view)
         {
-            var nativView = handler?.PlatformView;
+            //var nativView = handler?.PlatformView;
             handler.colorBlendUIView.BackgroundColor = view.TintColor.ToPlatform();
         }
 
         static void MapTintOpacity(AcrylicViewHandler handler, IAcrylicView view)
         {
-            var nativView = handler?.PlatformView;
+            //var nativView = handler?.PlatformView;
             handler.colorBlendUIView.Alpha = (float)view.TintOpacity;
         }
         static void MapBorderColor(AcrylicViewHandler handler, IAcrylicView view)
@@ -69,7 +69,7 @@ namespace Xe.AcrylicView.Controls
             var nativView = handler?.PlatformView;
             if (nativView == null) return;
 
-            Microsoft.Maui.Platform.ViewExtensions.ClearSubviews(nativView);
+            nativView.ClearSubviews();
 
             //加入亚克力层
             handler.acrylicEffectView.Frame = UIScreen.MainScreen.Bounds;
@@ -82,7 +82,7 @@ namespace Xe.AcrylicView.Controls
             //加入Maui视图
             if (view.PresentedContent is IView content && view.Handler != null)
             {
-                var frameworkElement = ElementExtensions.ToPlatform(content, view.Handler.MauiContext);
+                var frameworkElement = content.ToPlatform(view.Handler.MauiContext);
                 nativView.AddSubview(frameworkElement);
             }
         }
@@ -94,15 +94,14 @@ namespace Xe.AcrylicView.Controls
             if (handler == null)
                 return;
 
-            var ver = UIDevice.CurrentDevice.SystemVersion;
-
+            // var ver = UIDevice.CurrentDevice.SystemVersion;
 
             var style = view.EffectStyle switch
             {
                 EffectStyle.Light => UIBlurEffectStyle.Light,
                 EffectStyle.Dark => UIBlurEffectStyle.Dark,
                 EffectStyle.ExtraLight => UIBlurEffectStyle.ExtraLight,
-                EffectStyle.ExtraDark =>UIBlurEffectStyle.Dark,
+                EffectStyle.ExtraDark => UIBlurEffectStyle.Dark,
                 _ => UIBlurEffectStyle.Light
             };
             handler.acrylicEffectView.Effect = UIBlurEffect.FromStyle(style);

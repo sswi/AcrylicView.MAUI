@@ -10,14 +10,7 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
 {
     public class BorderViewGroup(Context context) : FrameLayout(context)
     {
-        /// <summary>
-        /// 跨平台测量
-        /// </summary>
         internal Func<double, double, Size> CrossPlatformMeasure { get; set; }
-
-        /// <summary>
-        /// 跨平台排列
-        /// </summary>
         internal Func<Rect, Size> CrossPlatformArrange { get; set; }
 
         public BorderDrawable BorderDrawable
@@ -62,32 +55,28 @@ namespace Xe.AcrylicView.Platforms.Android.Drawable
                 base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
                 return;
             }
-            double num = MeasureSpecExtensions.ToDouble(widthMeasureSpec, context);
-            double num2 = MeasureSpecExtensions.ToDouble(heightMeasureSpec, context);
+            double w = widthMeasureSpec.ToDouble(context);
+            double h = heightMeasureSpec.ToDouble(context);
             View childAt = GetChildAt(0);
             Size size = Size.Zero;
             if (childAt != null && childAt.Visibility != ViewStates.Gone)
             {
-                size = CrossPlatformMeasure(num, num2);
+                size = CrossPlatformMeasure(w, h);
             }
-            double defaultSize = GetDefaultSize(MeasureSpecExtensions.GetMode(widthMeasureSpec), ContextExtensions.FromPixels(context, SuggestedMinimumWidth), size.Width, num);
-            double defaultSize2 = GetDefaultSize(MeasureSpecExtensions.GetMode(heightMeasureSpec), ContextExtensions.FromPixels(context, SuggestedMinimumHeight), size.Height, num2);
-            float num3 = ContextExtensions.ToPixels(context, defaultSize);
-            float num4 = ContextExtensions.ToPixels(context, defaultSize2);
+            double width = GetDefaultSize(widthMeasureSpec.GetMode(), context.FromPixels(SuggestedMinimumWidth), size.Width, w);
+            double height = GetDefaultSize(heightMeasureSpec.GetMode(), context.FromPixels(SuggestedMinimumHeight), size.Height, h);
+
+            int measuredWidth = (int)context.ToPixels(width);
+            int measuredHeight = (int)context.ToPixels(height);
             //设置测量尺寸
-            SetMeasuredDimension((int)num3, (int)num4);
+            SetMeasuredDimension(measuredWidth, measuredHeight);
         }
 
         protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
         {
-            double num = ContextExtensions.FromPixels(Context, left);
-            double num2 = ContextExtensions.FromPixels(Context, top);
-            double num3 = ContextExtensions.FromPixels(Context, right);
-            double num4 = ContextExtensions.FromPixels(Context, bottom);
-            double num5 = num3 - num;
-            double num6 = num4 - num2;
-
-            Rect rect = new(0, 0, num5, num6);
+            var width = Context.FromPixels(right) - Context.FromPixels(left);
+            var height = Context.FromPixels(bottom) - Context.FromPixels(top);
+            Rect rect = new(0, 0, width, height);
             CrossPlatformArrange(rect);
         }
 

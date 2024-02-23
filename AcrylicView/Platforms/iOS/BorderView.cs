@@ -72,7 +72,7 @@ namespace Xe.AcrylicView.Platforms.iOS
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
-            Rect rectangle = CoreGraphicsExtensions.ToRectangle(Bounds);
+            Rect rectangle = Bounds.ToRectangle();
             CrossPlatformMeasure?.Invoke(rectangle.Width, rectangle.Height);
             CrossPlatformArrange?.Invoke(rectangle);
             SetupBorderLayer();
@@ -110,12 +110,14 @@ namespace Xe.AcrylicView.Platforms.iOS
             NFloat width = size.Width;
             size = layer.Bounds.Size;
             NFloat height = size.Height;
+
             NFloat x = layer.Bounds.X;
             NFloat y = layer.Bounds.Y;
             NFloat nFloat = x;
             NFloat nFloat1 = y;
             NFloat nFloat2 = x + width;
             NFloat nFloat3 = y + height;
+
             Thickness borderThickness = BorderThickness;
             double num = Math.Max(0, borderThickness.Left);
             double num1 = Math.Max(0, borderThickness.Top);
@@ -169,7 +171,7 @@ namespace Xe.AcrylicView.Platforms.iOS
                     double num11 = Math.Max(0, nFloat9 - num6);
                     double num12 = Math.Max(num10, num11);
                     CGAffineTransform cGAffineTransform = new((num12 > 0 ? (NFloat)(num10 / num12) : (NFloat)num12), 0, 0, (num12 > 0 ? (NFloat)(num11 / num12) : (NFloat)num12), (NFloat)(nFloat2 - num7 - num10), (NFloat)(nFloat1 + num6 + num11));
-                    cGPath1.AddArc(cGAffineTransform, 0, 0, (NFloat)num12, (NFloat)4.71238898038469, 0, false);
+                    cGPath1.AddArc(cGAffineTransform, 0, 0, (NFloat)num12, NFloat.Pi * 1.5f, 0, false);
                 }
                 else
                 {
@@ -181,7 +183,7 @@ namespace Xe.AcrylicView.Platforms.iOS
                     double num14 = Math.Max(0, nFloat10 - num8);
                     double num15 = Math.Max(num13, num14);
                     CGAffineTransform cGAffineTransform1 = new((num15 > 0 ? (NFloat)(num13 / num15) : (NFloat)num15), 0, 0, (num15 > 0 ? (NFloat)(num14 / num15) : (NFloat)num15), (NFloat)(nFloat2 - num7 - num13), (NFloat)(nFloat3 - num8 - num14));
-                    cGPath1.AddArc(cGAffineTransform1, 0, 0, (NFloat)num15, 0, (NFloat)1.5707963267949, false);
+                    cGPath1.AddArc(cGAffineTransform1, 0, 0, (NFloat)num15, 0, NFloat.Pi / 2, false);
                 }
                 else
                 {
@@ -212,11 +214,10 @@ namespace Xe.AcrylicView.Platforms.iOS
                     cGPath1.AddLineToPoint(nFloat, nFloat1);
                 }
                 cGPath1.CloseSubpath();
-                CGColor borderColor = BorderColor;
                 borderLayer = new CAShapeLayer
                 {
                     FillRule = CAShapeLayer.FillRuleEvenOdd,
-                    FillColor = borderColor,
+                    FillColor = BorderColor,
                     Path = cGPath1
                 };
                 layer.AddSublayer(borderLayer);
@@ -227,7 +228,7 @@ namespace Xe.AcrylicView.Platforms.iOS
         {
             NFloat width = size.Width;
             NFloat height = size.Height;
-            return CoreGraphicsExtensions.ToCGSize(CrossPlatformMeasure.Invoke(width, height));
+            return CrossPlatformMeasure.Invoke(width, height).ToCGSize();
         }
     }
 }
