@@ -430,8 +430,9 @@ namespace Xe.AcrylicView.Platforms.Android
                 {
                     bool redrawBitmap = blurView.mBlurredBitmap != oldBmp;
 
-                    //获取view所在的左上角位置
+                    //获取view所在屏幕的左上角位置
                     decor.GetLocationOnScreen(locations);
+                    //获取view在父视图中左上角位置
                     blurView.GetLocationOnScreen(locations);
 
                     //float x = locations[0];
@@ -444,9 +445,11 @@ namespace Xe.AcrylicView.Platforms.Android
                     RENDERING_COUNT++;
                     try
                     {
-                        float _borderWidth = (float)(_density * (_borderThickness.Left + _borderThickness.Right));
-                        float _borderHeight = (float)(_density * (_borderThickness.Top + _borderThickness.Bottom));
-                        blurView.mBlurringCanvas.Scale((blurView.mBitmapToBlur.Width + _borderWidth) / blurView.Width, (blurView.mBitmapToBlur.Height + _borderHeight) / blurView.Height);
+                        float sx = (float)blurView.mBitmapToBlur.Width / blurView.Width;
+                        float sy = (float)blurView.mBitmapToBlur.Height / blurView.Height;
+
+                        blurView.mBlurringCanvas.Scale(sx, sy);
+
                         blurView.mBlurringCanvas.Translate(-locations[0], -locations[1]);
                         decor.Background?.Draw(blurView.mBlurringCanvas);
                         decor.Draw(blurView.mBlurringCanvas);

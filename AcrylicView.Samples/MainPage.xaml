@@ -53,12 +53,10 @@
                   RowSpacing="20">
 
                 <!--  Row 1  -->
-                <ui:AcrylicView
-                                BorderColor="WhiteSmoke"
+                <ui:AcrylicView BorderColor="WhiteSmoke"
                                 BorderThickness="1"
                                 CornerRadius="20">
-                    <Grid
-                          ColumnDefinitions="*,*,*,*"
+                    <Grid ColumnDefinitions="*,*,*,*"
                           VerticalOptions="Center">
                         <StackLayout HorizontalOptions="Center">
                             <Label Style="{StaticResource IconStyle}"

@@ -118,7 +118,7 @@
 	  <Folder Include="Resources\Raw\Video\" />
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadWrongLinkerErrorInfoBarAcrylicViewSamplesHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionAcrylicViewSamplesHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarAcrylicViewSamplesHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />

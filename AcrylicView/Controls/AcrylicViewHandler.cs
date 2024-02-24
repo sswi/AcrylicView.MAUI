@@ -2,7 +2,7 @@
 {
     public partial class AcrylicViewHandler
     {
-        private static readonly PropertyMapper<IAcrylicView, AcrylicViewHandler> propertyMapper = new(ViewMapper)
+        private static readonly PropertyMapper<IAcrylicView, AcrylicViewHandler> propertyMapper = new()
         {
             [nameof(IAcrylicView.CornerRadius)] = MapCornerRadius,
             [nameof(IAcrylicView.TintColor)] = MapTintColor,
