@@ -217,7 +217,8 @@
                                     HeightRequest="80"
                                     TintColor="OrangeRed"
                                     TintOpacity=".25"
-                                    WidthRequest="80" />
+                                    WidthRequest="80" >                       
+                    </ui:AcrylicView>
 
                     <ui:AcrylicView Grid.Column="1"
                                     CornerRadius="10"
