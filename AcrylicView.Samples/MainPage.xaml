@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="AcrylicView.Samples.MainPage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
-             NavigationPage.HasNavigationBar="False">
+<ContentPage
+    x:Class="AcrylicView.Samples.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+    NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="IconStyle"
-                   TargetType="Label">
+            <Style x:Key="IconStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontFamily" Value="XF" />
                 <Setter Property="FontSize" Value="50" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
             </Style>
 
-            <Style x:Key="TitleStyle"
-                   TargetType="Label">
+            <Style x:Key="TitleStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
             </Style>
 
-            <Style x:Key="IconStyle2"
-                   BasedOn="{StaticResource IconStyle}"
-                   TargetType="Label">
+            <Style
+                x:Key="IconStyle2"
+                BasedOn="{StaticResource IconStyle}"
+                TargetType="Label">
                 <Setter Property="FontSize" Value="35" />
             </Style>
 
-            <Style x:Key="Title2Style"
-                   TargetType="Label">
+            <Style x:Key="Title2Style" TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontSize" Value="10" />
             </Style>
 
-            <Style x:Key="TitleStyle3"
-                   BasedOn="{StaticResource Title2Style}"
-                   TargetType="Label">
+            <Style
+                x:Key="TitleStyle3"
+                BasedOn="{StaticResource Title2Style}"
+                TargetType="Label">
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="FontSize" Value="13" />
@@ -43,243 +43,244 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid IgnoreSafeArea="True">
-        <Image Aspect="AspectFill"
-               Source="nature.jpg" />
+    <Grid x:Name="grid">
+        <Image Aspect="AspectFill" Source="nature.jpg" />
 
         <ScrollView>
-            <Grid Padding="10"
-                  RowDefinitions="100,180,100,100,100,1000"
-                  RowSpacing="20">
+            <Grid
+                Padding="10"
+                RowDefinitions="100,180,100,100,100,1000"
+                RowSpacing="20">
 
                 <!--  Row 1  -->
-                <ui:AcrylicView BorderColor="WhiteSmoke"
-                                BorderThickness="1"
-                                CornerRadius="20">
-                    <Grid ColumnDefinitions="*,*,*,*"
-                          VerticalOptions="Center">
+                <ui:AcrylicView
+                    BorderColor="WhiteSmoke"
+                    BorderThickness="1"
+                    CornerRadius="20">
+                    <Grid ColumnDefinitions="*,*,*,*" VerticalOptions="Center">
                         <StackLayout HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle}"
-                                   Text="&#xE72F;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource TitleStyle}"
-                                   Text="QQ" />
+                            <Label Style="{StaticResource IconStyle}" Text="&#xE72F;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TitleStyle}"
+                                Text="QQ" />
                         </StackLayout>
 
-                        <StackLayout Grid.Column="1"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle}"
-                                   Text="&#xE71F;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource TitleStyle}"
-                                   Text="AliPay" />
+                        <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle}" Text="&#xE71F;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TitleStyle}"
+                                Text="AliPay" />
                         </StackLayout>
 
-                        <StackLayout Grid.Column="2"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle}"
-                                   Text="&#xE738;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource TitleStyle}"
-                                   Text="WeChat" />
+                        <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle}" Text="&#xE738;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TitleStyle}"
+                                Text="WeChat" />
                         </StackLayout>
 
-                        <StackLayout Grid.Column="3"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle}"
-                                   Text="&#xE6F8;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource TitleStyle}"
-                                   Text="CCB" />
+                        <StackLayout Grid.Column="3" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle}" Text="&#xE6F8;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TitleStyle}"
+                                Text="CCB" />
                         </StackLayout>
                     </Grid>
                 </ui:AcrylicView>
 
                 <!--  Row2  -->
-                <ui:AcrylicView Grid.Row="1"
-                                CornerRadius="20"
-                                EffectStyle="ExtraDark">
-                    <Grid Padding="10"
-                          ColumnDefinitions="*,*,*,*"
-                          RowDefinitions="*,*"
-                          RowSpacing="20"
-                          VerticalOptions="Center">
+                <ui:AcrylicView
+                    Grid.Row="1"
+                    CornerRadius="20"
+                    EffectStyle="ExtraDark">
+                    <Grid
+                        Padding="10"
+                        ColumnDefinitions="*,*,*,*"
+                        RowDefinitions="*,*"
+                        RowSpacing="20"
+                        VerticalOptions="Center">
                         <StackLayout HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE62A;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Theme" />
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE62A;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Theme" />
                         </StackLayout>
-                        <StackLayout Grid.Column="1"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE622;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Message" />
+                        <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE622;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Message" />
                         </StackLayout>
-                        <StackLayout Grid.Column="2"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE60F;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Music" />
+                        <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE60F;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Music" />
                         </StackLayout>
-                        <StackLayout Grid.Column="3"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE61D;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Seeting" />
+                        <StackLayout Grid.Column="3" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE61D;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Seeting" />
                         </StackLayout>
 
-                        <StackLayout Grid.Row="1"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE68A;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Mail" />
+                        <StackLayout Grid.Row="1" HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE68A;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Mail" />
                         </StackLayout>
-                        <StackLayout Grid.Row="1"
-                                     Grid.Column="1"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE68D;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Photo" />
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE68D;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Photo" />
                         </StackLayout>
-                        <StackLayout Grid.Row="1"
-                                     Grid.Column="2"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE6A3;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Phone" />
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE6A3;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Phone" />
                         </StackLayout>
-                        <StackLayout Grid.Row="1"
-                                     Grid.Column="3"
-                                     HorizontalOptions="Center">
-                            <Label Style="{StaticResource IconStyle2}"
-                                   Text="&#xE731;" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Style="{StaticResource Title2Style}"
-                                   Text="Clock" />
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            HorizontalOptions="Center">
+                            <Label Style="{StaticResource IconStyle2}" Text="&#xE731;" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource Title2Style}"
+                                Text="Clock" />
                         </StackLayout>
                     </Grid>
                 </ui:AcrylicView>
 
                 <!--  Row3  -->
-                <Grid Grid.Row="2"
-                      ColumnDefinitions="*,*,*,*"
-                      ColumnSpacing="10">
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="10">
 
                     <ui:AcrylicView EffectStyle="ExtraLight">
                         <Grid>
-                            <Label Style="{StaticResource TitleStyle3}"
-                                   Text="ExtraLight" />
+                            <Label Style="{StaticResource TitleStyle3}" Text="ExtraLight" />
                         </Grid>
                     </ui:AcrylicView>
 
-                    <ui:AcrylicView Grid.Column="1"
-                                    EffectStyle="Light">
+                    <ui:AcrylicView Grid.Column="1" EffectStyle="Light">
                         <Grid>
-                            <Label Style="{StaticResource TitleStyle3}"
-                                   Text="Light" />
+                            <Label Style="{StaticResource TitleStyle3}" Text="Light" />
                         </Grid>
                     </ui:AcrylicView>
-                    <ui:AcrylicView Grid.Column="2"
-                                    EffectStyle="Dark">
+                    <ui:AcrylicView Grid.Column="2" EffectStyle="Dark">
                         <Grid>
-                            <Label Style="{StaticResource TitleStyle3}"
-                                   Text="Dark" />
+                            <Label Style="{StaticResource TitleStyle3}" Text="Dark" />
                         </Grid>
                     </ui:AcrylicView>
-                    <ui:AcrylicView Grid.Column="3"
-                                    EffectStyle="ExtraDark">
+                    <ui:AcrylicView Grid.Column="3" EffectStyle="ExtraDark">
                         <Grid>
-                            <Label Style="{StaticResource TitleStyle3}"
-                                   Text="ExtraDark" />
+                            <Label Style="{StaticResource TitleStyle3}" Text="ExtraDark" />
                         </Grid>
                     </ui:AcrylicView>
                 </Grid>
 
                 <!--  Row4  -->
-                <Grid Grid.Row="3"
-                      ColumnDefinitions="*,*,*,*"
-                      ColumnSpacing="10">
-                    <ui:AcrylicView CornerRadius="40"
-                                    HeightRequest="80"
-                                    TintColor="OrangeRed"
-                                    TintOpacity=".25"
-                                    WidthRequest="80" >                       
-                    </ui:AcrylicView>
+                <Grid
+                    Grid.Row="3"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="10">
+                    <ui:AcrylicView
+                        CornerRadius="40"
+                        HeightRequest="80"
+                        TintColor="OrangeRed"
+                        TintOpacity=".25"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="1"
-                                    CornerRadius="10"
-                                    HeightRequest="80"
-                                    TintColor="BlueViolet"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="1"
+                        CornerRadius="10"
+                        HeightRequest="80"
+                        TintColor="BlueViolet"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="2"
-                                    CornerRadius="10,30,60,60"
-                                    HeightRequest="80"
-                                    TintColor="Blue"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="2"
+                        CornerRadius="10,30,60,60"
+                        HeightRequest="80"
+                        TintColor="Blue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="3"
-                                    CornerRadius="8,50"
-                                    HeightRequest="80"
-                                    TintColor="AliceBlue"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="3"
+                        CornerRadius="8,50"
+                        HeightRequest="80"
+                        TintColor="AliceBlue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
                 </Grid>
 
                 <!--  Row5  -->
-                <Grid Grid.Row="4"
-                      ColumnDefinitions="*,*,*,*"
-                      ColumnSpacing="10">
-                    <ui:AcrylicView BorderColor="OrangeRed"
-                                    BorderThickness="2"
-                                    CornerRadius="40"
-                                    HeightRequest="80"
-                                    TintColor="OrangeRed"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                <Grid
+                    Grid.Row="4"
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="10">
+                    <ui:AcrylicView
+                        BorderColor="OrangeRed"
+                        BorderThickness="2"
+                        CornerRadius="40"
+                        HeightRequest="80"
+                        TintColor="OrangeRed"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="1"
-                                    BorderColor="BlueViolet"
-                                    BorderThickness="0,5"
-                                    CornerRadius="10"
-                                    HeightRequest="80"
-                                    TintColor="BlueViolet"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="1"
+                        BorderColor="BlueViolet"
+                        BorderThickness="0,5"
+                        CornerRadius="10"
+                        HeightRequest="80"
+                        TintColor="BlueViolet"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="2"
-                                    BorderColor="DarkGray"
-                                    BorderThickness="0,5,10,3"
-                                    CornerRadius="10,30,60,60"
-                                    HeightRequest="80"
-                                    TintColor="Blue"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="2"
+                        BorderColor="DarkGray"
+                        BorderThickness="0,5,10,3"
+                        CornerRadius="10,30,60,60"
+                        HeightRequest="80"
+                        TintColor="Blue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
 
-                    <ui:AcrylicView Grid.Column="3"
-                                    BorderColor="HotPink"
-                                    BorderThickness="5,0"
-                                    CornerRadius="8,50"
-                                    HeightRequest="80"
-                                    TintColor="AliceBlue"
-                                    TintOpacity=".2"
-                                    WidthRequest="80" />
+                    <ui:AcrylicView
+                        Grid.Column="3"
+                        BorderColor="HotPink"
+                        BorderThickness="5,0"
+                        CornerRadius="8,50"
+                        HeightRequest="80"
+                        TintColor="AliceBlue"
+                        TintOpacity=".2"
+                        WidthRequest="80" />
                 </Grid>
             </Grid>
         </ScrollView>

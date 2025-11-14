@@ -29,6 +29,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleIdentifier</key>
-	<string>cc.xecc.acrylicView</string>
+	<string>cc.xecc.acrylicview</string>
 </dict>
 </plist>

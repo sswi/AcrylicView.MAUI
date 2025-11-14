@@ -57,6 +57,18 @@ namespace Xe.AcrylicView.Controls
             //nativView.BorderThickness = view.BorderThickness.ToPlatform();
         }
 
+
+        //2025.11.15
+        private static void MapSize(AcrylicViewHandler handler, IAcrylicView view)
+        {
+
+            if (view.HeightRequest >= 0)
+                handler._border.Height = view.HeightRequest;
+            if (view.WidthRequest >= 0)
+                handler._border.Width = view.WidthRequest;
+        }
+
+
         private static void MapCornerRadius(AcrylicViewHandler handler, IAcrylicView view)
         {
             if (handler == null) return;

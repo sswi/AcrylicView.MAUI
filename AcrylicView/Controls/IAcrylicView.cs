@@ -12,6 +12,12 @@
         EffectStyle EffectStyle { get; set; }
 
         Thickness BorderThickness { get; set; }
+#if WINDOWS
+
+        double HeightRequest { get;set;  }
+
+        double WidthRequest { get;set; }
+#endif
     }
 
     public enum EffectStyle

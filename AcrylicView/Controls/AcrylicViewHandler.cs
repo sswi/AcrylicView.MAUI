@@ -13,6 +13,8 @@
             [nameof(IAcrylicView.BorderColor)] = MapBorderColor,
 #if WINDOWS
             [nameof(IAcrylicView.Padding)] = MapPadding,
+            [nameof(IAcrylicView.HeightRequest)] = MapSize,
+            [nameof(IAcrylicView.WidthRequest)] = MapSize
 #endif
         };
 

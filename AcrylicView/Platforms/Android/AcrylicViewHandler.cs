@@ -1,5 +1,4 @@
 ﻿using Android.Widget;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Xe.AcrylicView.Platforms.Android;
@@ -32,7 +31,7 @@ namespace Xe.AcrylicView.Controls
 
             realtimeBlurView = new RealtimeBlurView(Context, SetContentVisibel);
             realtimeBlurView.SetBlurRadius(120);
-            realtimeBlurView.SetOverlayColor(Colors.Transparent.ToAndroid());
+            realtimeBlurView.SetOverlayColor(Colors.Transparent.ToPlatform());
             realtimeBlurView.SetDownsampleFactor(4);
 
             borderViewGroup = new BorderViewGroup(Context)
@@ -167,7 +166,7 @@ namespace Xe.AcrylicView.Controls
         {
             if ((view.TintColor == null || view.TintColor == Colors.Transparent) && view.EffectStyle == EffectStyle.Custom)
             {
-                colorBlendLayer.SetBackgroundDrawable(null);
+                colorBlendLayer.SetBackgroundDrawable(null);               
             }
             else
             {
