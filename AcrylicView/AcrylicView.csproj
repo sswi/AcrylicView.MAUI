@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0-ios26.0;net9.0-ios18.0;net9.0-maccatalyst18.0;net10.0-maccatalyst26.0;net9.0-android35.0;net10.0-android36.0;</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.26100.0;net9.0-windows10.0.26100.0;</TargetFrameworks>
+		<TargetFrameworks>net10.0-ios;net9.0-ios;net9.0-maccatalyst;net10.0-maccatalyst;net9.0-android;net10.0-android;</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0;net9.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<UseMaui>true</UseMaui>
@@ -28,7 +28,7 @@
 			.Net MAUI 平台实现的亚克力效果视图，
 			支持：Windows、安卓、苹果
 		</Description>
-		<Version>3.0.0</Version>
+		<Version>3.0.1</Version>
 		<PackageProjectUrl>https://github.com/sswi/AcrylicView.MAUI</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/sswi/AcrylicView.MAUI</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -95,12 +95,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.10" Condition="'$(TargetFramework)' == 'net10.0'" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.10" Condition="'$(TargetFramework)' == 'net10.0'" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.51" Condition="'$(TargetFramework)' == 'net10.0'" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.51" Condition="'$(TargetFramework)' == 'net10.0'" />
 
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" Condition="'$(TargetFramework)' == 'net9.0'" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" Condition="'$(TargetFramework)' == 'net9.0'" />
 	</ItemGroup>
+
 
 	<!--<ItemGroup>
 	  <None Include="..\..\..\..\..\Desktop\Nuget\ico.png">
